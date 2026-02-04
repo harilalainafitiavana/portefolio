@@ -1,24 +1,11 @@
-import About from "./components/About"
-import Experiences from "./components/Experiences"
-import Footer from "./components/Footer"
-import Home from "./components/Home"
-import Navbar from "./components/Navbar"
-import Projects from "./components/Projects"
+
+import Portfolio from "./components/PorteFolio"
 export default function App() {
   return (
     <div>
-      <div className="p-5 md:px-[10%]">
-        <Navbar />
-        <Home />
+      <div>
+        <Portfolio />
       </div>
-      <About />
-      <div className="p-5 md:p-0 md:px-[10%]">
-        <Experiences />
-      </div>
-      <div className="p-5 md:px-[10%]">
-        <Projects />
-      </div>
-      <Footer />
     </div>
   )
 }
