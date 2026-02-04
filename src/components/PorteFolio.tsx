@@ -327,7 +327,7 @@ const Portfolio = () => {
                                 className="mb-8"
                             >
                                 <span className="inline-block px-4 py-2 bg-gradient-to-r from-violet-500/10 to-pink-600/10 rounded-full text-violet-600 font-medium mb-4">
-                                    Développeur Full Stack Junior
+                                    Développeur Full Stack
                                 </span>
                                 <h1 className="text-4xl md:text-6xl text-gray-500 font-bold mb-4">
                                     Bonjour, je suis{' '}
@@ -478,7 +478,7 @@ const Portfolio = () => {
                                         Ma motivation
                                     </h3>
                                     <p className="text-gray-700 leading-relaxed">
-                                        Développeur Full Stack Junior passionné par la création de solutions web modernes
+                                        Développeur Full Stack passionné par la création de solutions web modernes
                                         et performantes. Mon parcours en 3ᵉ année Informatique m'a permis d'acquérir
                                         une solide base technique et une passion pour l'apprentissage continu.
                                     </p>
@@ -1061,7 +1061,7 @@ const Portfolio = () => {
                                 </span>
                             </div>
                             <p className="text-gray-600">
-                                Développeur Full Stack Junior – Passionné par l'innovation
+                                Développeur Full Stack – Passionné par l'innovation
                             </p>
                             <div className="mt-2 flex items-center gap-2 justify-center md:justify-start">
                                 <Github className="w-4 h-4 text-gray-500" />
