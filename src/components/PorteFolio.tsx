@@ -58,6 +58,13 @@ const Portfolio = () => {
             link: 'https://www.printy.mg',
         },
         {
+            title: 'Vente des ordinateurs',
+            description: 'Site de vente en ligne d\'ordinateurs et accessoires informatiques',
+            technologies: ['HTML', 'CSS', 'JavaScript'],
+            imageColor: 'bg-gradient-to-r from-orange-400 to-pink-300',
+            link: 'https://venteordinateur.netlify.app',
+        },
+        {
             title: 'Plateforme éducative',
             description: 'Université Saint Vincent de Paul Akamasoa - Plateforme éducative complète',
             technologies: ['Django', 'Tailwind CSS', 'PostgreSQL'],
