@@ -245,7 +245,7 @@ const Portfolio = () => {
                     >
                         <Code2 className="w-8 h-8 text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text" />
                         <span className="text-2xl font-bold text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text">
-                            Harilalaina
+                            HariFitia
                         </span>
                     </motion.div>
 
