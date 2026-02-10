@@ -95,7 +95,7 @@ const Portfolio = () => {
         {
             title: 'Printy',
             description: 'Gestion et suivi des demandes d\'impression numérique à distance',
-            technologies: ['Django', 'React', 'Tailwind CSS', 'DaisyUI'],
+            technologies: ['Django', 'React', 'Tailwind CSS', 'PostgreSQL'],
             category: 'fullstack',
             image: 'https://github.com/harilalainafitiavana/images-portefolio/blob/main/Printmg.png?raw=true',
             gallery: [
@@ -138,7 +138,9 @@ const Portfolio = () => {
                 'https://github.com/harilalainafitiavana/images-portefolio/blob/main/usvpa5.png?raw=true',
                 'https://github.com/harilalainafitiavana/images-portefolio/blob/main/usvpa6.png?raw=true',
                 'https://github.com/harilalainafitiavana/images-portefolio/blob/main/usvpa7.png?raw=true',
-                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/usvpa8.png?raw=true'
+                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/usvpa8.png?raw=true',
+                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/usvpa9.png?raw=true',
+                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/usvpa10.png?raw=true'
             ],
             link: '#',
             github: 'https://github.com/harilalainafitiavana/usvpa',
@@ -151,11 +153,39 @@ const Portfolio = () => {
             category: 'fullstack',
             image: 'https://github.com/harilalainafitiavana/images-portefolio/blob/main/Cnreprojet.png?raw=true',
             gallery: [
-                'https://images.unsplash.com/photo-1498049794561-7780e7231661?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-                'https://images.unsplash.com/photo-1556656793-08538906a9f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/cnre2.png?raw=true',
+                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/cnre3.png?raw=true',
+                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/cnre4.png?raw=true',
+                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/cnre5.png?raw=true',
+                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/cnre6.png?raw=true',
+                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/cnre7.png?raw=true',
+                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/cnre8.png?raw=true'
             ],
             link: '#',
             github: 'https://github.com/harilalainafitiavana/bibliotheque-numerique',
+            featured: false
+        },
+        {
+            title: 'Gestion des rapports mensuels du ministère',
+            description: 'Plateforme web permettant aux agents du ministère de télecharger et de voir des rapports mensuels de chaque département du ministère',
+            technologies: ['Django', 'React', 'TailwindCSS', 'PostgreSQL'],
+            category: 'fullstack',
+            image: 'https://github.com/harilalainafitiavana/images-portefolio/blob/main/minister7.png?raw=true',
+            gallery: [
+                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/minister1.png?raw=true',
+                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/minister2.png?raw=true',
+                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/minister3.png?raw=true',
+                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/minister4.png?raw=true',
+                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/minister5.png?raw=true',
+                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/minister6.png?raw=true',
+                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/minister8.png?raw=true',
+                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/minister9.png?raw=true',
+                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/minister10.png?raw=true',
+                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/minister11.png?raw=true',
+                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/minister12.png?raw=true'
+            ],
+            link: '#',
+            github: 'https://github.com/harilalainafitiavana/Rapport_mensuel_avec_django_react',
             featured: false
         }
         // ... ajoutez d'autres projets
@@ -207,6 +237,7 @@ const Portfolio = () => {
         { name: 'Django', category: 'backend', color: 'from-green-600 to-green-700', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg' },
         { name: 'Flask', category: 'backend', color: 'from-gray-700 to-gray-800', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg' },
         { name: 'PHP', category: 'backend', color: 'from-indigo-600 to-purple-600', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg' },
+        { name: 'Node.js', category: 'backend', color: 'from-green-600 to-gray-900', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/960px-Node.js_logo.svg.png?20170401104355' },
 
         // Base de données
         { name: 'PostgreSQL', category: 'database', color: 'from-blue-700 to-blue-800', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
@@ -332,18 +363,95 @@ const Portfolio = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Créer le lien mailto correctement encodé
-        const subject = `Message de ${encodeURIComponent(formData.name)}`;
-        const body = `${encodeURIComponent(formData.message)}\n\nRépondre à: ${encodeURIComponent(formData.email)}`;
-        const mailtoLink = `mailto:harilalainafitiavana@gmail.com?subject=${subject}&body=${body}`;
+        // Préparer les données
+        const emailData = {
+            to: 'harilalainafitiavana@gmail.com',
+            subject: `[Portfolio] Message de ${formData.name}`,
+            body: `
+                ${formData.message}
+    
+                ---
+                Informations de contact :
+                • Nom : ${formData.name}
+                • Email : ${formData.email}
+                • Date : ${new Date().toLocaleDateString('fr-FR')}
+                • URL : ${window.location.href}
+            `
+        };
 
-        // Ouvrir le client email
-        window.open(mailtoLink, '_blank');
+        // Essayer mailto
+        const mailtoLink = `mailto:${emailData.to}?subject=${encodeURIComponent(emailData.subject)}&body=${encodeURIComponent(emailData.body)}`;
 
-        // Réinitialiser le formulaire et afficher le message de confirmation
-        setIsSubmitted(true);
-        setTimeout(() => setIsSubmitted(false), 3000);
-        setFormData({ name: '', email: '', message: '' });
+        // Ouvrir dans un nouvel onglet
+        const newWindow = window.open(mailtoLink, '_blank');
+
+        // Vérifier si ça a fonctionné
+        setTimeout(() => {
+            if (!newWindow || newWindow.closed || newWindow.closed === undefined) {
+                // Échec - proposer des alternatives
+                showEmailFallback(emailData);
+            } else {
+                // Succès
+                setIsSubmitted(true);
+                setTimeout(() => setIsSubmitted(false), 5000);
+                setFormData({ name: '', email: '', message: '' });
+            }
+        }, 1000);
+    };
+
+    interface EmailData {
+        to: string;
+        subject: string;
+        body: string;
+    }
+
+    const showEmailFallback = (emailData: EmailData): void => {
+        const modalContent = `
+            <div style="padding: 20px; max-width: 500px;">
+                <h3 style="color: #7c3aed; margin-bottom: 15px;">Ouvrez votre client email</h3>
+                <p>Votre navigateur n'a pas pu ouvrir automatiquement votre client email.</p>
+                
+                <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                    <p><strong>Destinataire :</strong> ${emailData.to}</p>
+                    <p><strong>Sujet :</strong> ${emailData.subject}</p>
+                    <p><strong>Message :</strong></p>
+                    <pre style="background: white; padding: 10px; border-radius: 5px; overflow: auto;">
+    ${emailData.body}
+                    </pre>
+                </div>
+                
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button onclick="navigator.clipboard.writeText('${emailData.to}\\n\\nSujet: ${emailData.subject}\\n\\n${emailData.body}')" 
+                            style="padding: 10px 15px; background: #7c3aed; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                        📋 Copier
+                    </button>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=${emailData.to}&su=${encodeURIComponent(emailData.subject)}&body=${encodeURIComponent(emailData.body)}" 
+                       target="_blank"
+                       style="padding: 10px 15px; background: #ea4335; color: white; text-decoration: none; border-radius: 5px;">
+                        📧 Ouvrir Gmail
+                    </a>
+                </div>
+            </div>
+        `;
+
+        // Créer une modal
+        const modal = document.createElement('div');
+        modal.style.cssText = `
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5); display: flex;
+            align-items: center; justify-content: center; z-index: 10000;
+        `;
+        modal.innerHTML = modalContent;
+        document.body.appendChild(modal);
+
+        // Fermer la modal au clic
+        modal.addEventListener('click', (e: MouseEvent) => {
+            if (e.target === modal) {
+                document.body.removeChild(modal);
+                setIsSubmitted(true);
+                setFormData({ name: '', email: '', message: '' });
+            }
+        });
     };
 
     // Gestionnaire de changement de formulaire
@@ -355,7 +463,7 @@ const Portfolio = () => {
     };
 
     // Message à afficher - personnalisable
-    const popupMessage = "👋 Bienvenue sur le portfolio de Fitiavana Harilalaina ! Développeur FullStack junior, prêt à travailler avec vous. Merci d'avoir visité mon site web ! 😊";
+    const popupMessage = "👋 Bienvenue sur mon portfolio! Je suis Fitiavana Harilalaina, développeur Full Stack, passionné par le web et prêt à collaborer sur de nouveau projets. Bonne visite 🚀";
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
@@ -559,7 +667,7 @@ const Portfolio = () => {
                                     repeat: Infinity,
                                     ease: "easeInOut"
                                 }}
-                                className="absolute inset-0 bg-gradient-to-r from-violet-500 to-pink-600 rounded-full blur-3xl -z-10"
+                                className="absolute inset-0 bg-gradient-to-r from-violet-300 to-pink-400 rounded-full blur-3xl -z-10"
                             />
 
                             {/* Anneaux concentriques animés */}
@@ -1022,7 +1130,7 @@ const Portfolio = () => {
                                 transition={{ duration: 0.5, delay: index * 0.1 }}
                                 viewport={{ once: true }}
                                 whileHover={{ y: -10 }}
-                                className="group relative bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500"
+                                className="group relative bg-white rounded overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500"
                             >
                                 {/* Badge "Featured" */}
                                 {project.featured && (
@@ -1310,7 +1418,7 @@ const Portfolio = () => {
                                 }}
                                 className="fixed top-6 left-6 z-[101] w-[calc(100vw-3rem)] max-w-md"
                             >
-                                <div className="bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[85vh] flex flex-col">
+                                <div className="bg-white rounded-xl shadow-2xl overflow-hidden max-h-[85vh] flex flex-col">
                                     {/* Header */}
                                     <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gradient-to-r from-violet-50 to-pink-50 flex-shrink-0">
                                         <div className="flex-1 min-w-0">
@@ -1764,7 +1872,7 @@ const Portfolio = () => {
                                                 className="absolute -top-1 -right-1 w-2 h-2 bg-green-500 rounded-full"
                                             />
                                         </div>
-                                        <span className="text-sm font-semibold text-gray-700">Assistant Virtuel</span>
+                                        <span className="text-sm font-semibold text-gray-700">HariFitia</span>
                                     </div>
                                     <motion.button
                                         whileHover={{ scale: 1.1, rotate: 90 }}
@@ -1906,7 +2014,7 @@ const Portfolio = () => {
                                                 onClick={closePopup}
                                                 className="flex-1 py-2 px-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-xs font-medium"
                                             >
-                                                Continuer
+                                                Fermer
                                             </motion.button>
                                             <motion.a
                                                 href="#contact"
