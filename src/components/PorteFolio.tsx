@@ -108,7 +108,7 @@ const Portfolio = () => {
                 'https://github.com/harilalainafitiavana/images-portefolio/blob/main/print7.png?raw=true'
             ],
             link: 'https://www.printy.mg',
-            github: 'https://github.com/harilalainafitiavana/dashboard-with-django',
+            github: 'https://github.com/harilalainafitiavana/print.mg/tree/master',
             featured: false
         },
         {
