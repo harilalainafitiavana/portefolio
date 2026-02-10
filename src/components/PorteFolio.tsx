@@ -291,7 +291,7 @@ const Portfolio = () => {
         const popupTimer = setTimeout(() => {
             setShowPopup(true);
             startTypingAnimation();
-        }, 2000); // 40 secondes
+        }, 30000); // 30 secondes
 
         return () => {
             clearTimeout(popupTimer);
