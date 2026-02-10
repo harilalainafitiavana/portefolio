@@ -28,8 +28,11 @@ import {
     Cpu,
     Terminal,
     Bot,
-    Sparkles
+    Sparkles,
+    FileText,
+    Download
 } from 'lucide-react';
+import cv from '../../public/harilalaina_fitiavana_2026_CV.pdf'
 // Définir le type Project
 type ProjectType = {
     title: string;
@@ -167,7 +170,7 @@ const Portfolio = () => {
         },
         {
             title: 'Gestion des rapports mensuels du ministère',
-            description: 'Plateforme web permettant aux agents du ministère de télecharger et de voir des rapports mensuels de chaque département du ministère',
+            description: 'Plateforme web permettant aux agents du ministère de télécharger et de voir des rapports mensuels de chaque département du ministère',
             technologies: ['Django', 'React', 'TailwindCSS', 'PostgreSQL'],
             category: 'fullstack',
             image: 'https://github.com/harilalainafitiavana/images-portefolio/blob/main/minister7.png?raw=true',
@@ -638,7 +641,7 @@ const Portfolio = () => {
                                 opacity: 1,
                                 scale: 1,
                                 rotate: 0,
-                                y: [0, -10, 0] // Flottement léger
+                                // y: [0, -10, 0] // Flottement léger
                             }}
                             transition={{
                                 duration: 0.8,
@@ -667,7 +670,7 @@ const Portfolio = () => {
                                     repeat: Infinity,
                                     ease: "easeInOut"
                                 }}
-                                className="absolute inset-0 bg-gradient-to-r from-violet-300 to-pink-400 rounded-full blur-3xl -z-10"
+                                className="absolute inset-0 bg-gradient-to-r from-violet-200 to-pink-300 rounded-full blur-3xl -z-10"
                             />
 
                             {/* Anneaux concentriques animés */}
@@ -699,7 +702,7 @@ const Portfolio = () => {
                                     <motion.div
                                         whileHover={{ scale: 1.1 }}
                                         transition={{ duration: 0.3 }}
-                                        className="relative w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72"
+                                        className="relative w-48 h-48 sm:w-56 sm:h-56  lg:w-72 lg:h-72"
                                     >
                                         {/* Gradient animé derrière l'image */}
                                         <motion.div
@@ -726,20 +729,12 @@ const Portfolio = () => {
                                                         transition={{ duration: 0.8 }}
                                                         whileHover={{ scale: 1.05 }}
                                                     />
-
-                                                    {/* Effet de brillance au survol */}
-                                                    <motion.div
-                                                        initial={{ x: '-100%' }}
-                                                        whileHover={{ x: '200%' }}
-                                                        transition={{ duration: 0.6 }}
-                                                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                                                    />
                                                 </div>
                                             </div>
                                         </motion.div>
 
                                         {/* Points décoratifs */}
-                                        {[...Array(4)].map((_, i) => (
+                                        {/* {[...Array(4)].map((_, i) => (
                                             <motion.div
                                                 key={i}
                                                 animate={{
@@ -757,7 +752,7 @@ const Portfolio = () => {
                                                             'left-0 top-1/2 -translate-x-1/2 -translate-y-1/2'
                                                     }`}
                                             />
-                                        ))}
+                                        ))} */}
                                     </motion.div>
                                 </div>
                             </div>
@@ -907,18 +902,46 @@ const Portfolio = () => {
                                     <motion.a
                                         href="mailto:harilalainafitiavana@gmail.com"
                                         whileHover={{ x: 5 }}
-                                        className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                                        className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group"
                                     >
-                                        <Mail className="w-5 h-5 text-violet-500" />
+                                        <Mail className="w-5 h-5 text-violet-500 group-hover:scale-110 transition-transform" />
                                         <span className="font-medium text-violet-500">harilalainafitiavana@gmail.com</span>
                                     </motion.a>
+
                                     <motion.a
                                         href="https://wa.me/261336691909"
                                         whileHover={{ x: 5 }}
-                                        className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                                        className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group"
                                     >
-                                        <Phone className="w-5 h-5 text-green-500" />
+                                        <Phone className="w-5 h-5 text-green-500 group-hover:scale-110 transition-transform" />
                                         <span className="font-medium text-green-500">WhatsApp: 033 66 919 09</span>
+                                    </motion.a>
+
+                                    {/* Bouton Télécharger CV - NOUVEAU */}
+                                    <motion.a
+                                        href={cv} // ← Chemin vers votre CV dans /public
+                                        download="CV_Harilalaina_Fitiavana.pdf"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        whileHover={{ x: 5, scale: 1.02 }}
+                                        whileTap={{ scale: 0.98 }}
+                                        className="flex items-center justify-between p-4 bg-gradient-to-r from-violet-50 to-pink-50 rounded-lg hover:from-violet-100 hover:to-pink-100 transition-all duration-300 group border border-violet-200"
+                                    >
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-10 h-10 bg-gradient-to-r from-violet-500 to-pink-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                                                <FileText className="w-5 h-5 text-white" />
+                                            </div>
+                                            <div>
+                                                <span className="font-bold text-gray-800 block">Télécharger mon CV</span>
+                                                <span className="text-sm text-gray-600">PDF - Mise à jour récente</span>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <span className="text-xs px-2 py-1 bg-violet-100 text-violet-700 rounded-full font-medium">
+                                                PDF
+                                            </span>
+                                            <Download className="w-4 h-4 text-violet-500 group-hover:translate-y-1 transition-transform" />
+                                        </div>
                                     </motion.a>
                                 </div>
                             </div>
