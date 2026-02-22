@@ -914,7 +914,7 @@ const Portfolio = () => {
                                         className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group"
                                     >
                                         <Phone className="w-5 h-5 text-green-500 group-hover:scale-110 transition-transform" />
-                                        <span className="font-medium text-green-500">WhatsApp: 033 66 919 09</span>
+                                        <span className="font-medium text-green-500">WhatsApp: 034 79 647 92</span>
                                     </motion.a>
 
                                     {/* Bouton Télécharger CV - NOUVEAU */}
@@ -1694,7 +1694,7 @@ const Portfolio = () => {
                                                 href="tel:+261347964792"
                                                 className="font-medium hover:underline"
                                             >
-                                                034 79 647 92
+                                                034 79 647 92 - 033 66 919 09
                                             </a>
                                         </div>
                                     </div>
@@ -1709,7 +1709,7 @@ const Portfolio = () => {
                                                 href="https://wa.me/261336691909"
                                                 className="font-medium hover:underline"
                                             >
-                                                033 66 919 09
+                                                034 79 647 92
                                             </a>
                                         </div>
                                     </div>
@@ -1778,7 +1778,7 @@ const Portfolio = () => {
                                                     <MessageSquare className="w-5 h-5 text-green-500" />
                                                     <div>
                                                         <p className="text-sm text-gray-500">WhatsApp professionnel</p>
-                                                        <p className="font-medium text-green-500">033 66 919 09</p>
+                                                        <p className="font-medium text-green-500">034 79 647 92 - 033 66 919 09</p>
                                                     </div>
                                                 </div>
                                                 <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
