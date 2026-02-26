@@ -359,7 +359,27 @@ const Portfolio = () => {
     const handleNavClick = (id: string) => {
         setActiveSection(id);
         setIsMenuOpen(false);
-        sectionsRef.current[id]?.scrollIntoView({ behavior: 'smooth' });
+
+        // Vérifier si on est sur mobile
+        const isMobile = window.innerWidth < 768;
+
+        // Attendre que le DOM soit mis à jour
+        setTimeout(() => {
+            const element = sectionsRef.current[id];
+            if (element) {
+                if (isMobile) {
+                    // Sur mobile, on utilise un scroll instantané d'abord
+                    element.scrollIntoView({ behavior: 'auto' });
+                    // Puis on fait un scroll smooth après un petit délai
+                    setTimeout(() => {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 50);
+                } else {
+                    // Sur desktop, scroll smooth direct
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
+        }, isMobile ? 200 : 50); // Délai plus long sur mobile
     };
 
     // Gestionnaire de soumission du formulaire
@@ -518,27 +538,33 @@ const Portfolio = () => {
                 </div>
 
                 {/* Mobile Navigation */}
+                {/* Mobile Navigation */}
                 <AnimatePresence>
                     {isMenuOpen && (
                         <motion.div
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: 'auto' }}
                             exit={{ opacity: 0, height: 0 }}
-                            className="md:hidden bg-white border-t"
+                            transition={{ duration: 0.2 }}
+                            className="md:hidden bg-white border-t overflow-hidden"
                         >
                             <div className="px-6 py-4 flex flex-col gap-4">
                                 {navItems.map((item) => (
-                                    <button
+                                    <motion.button
                                         key={item.id}
-                                        onClick={() => handleNavClick(item.id)}
-                                        className={`flex items-center gap-3 py-2 font-medium ${activeSection === item.id
+                                        whileTap={{ scale: 0.98 }}
+                                        onClick={() => {
+                                            handleNavClick(item.id);
+                                            setIsMenuOpen(false); // Fermer immédiatement après le clic
+                                        }}
+                                        className={`flex items-center gap-3 py-3 px-2 font-medium w-full text-left rounded-lg active:bg-gray-100 ${activeSection === item.id
                                             ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text'
                                             : 'text-gray-600'
                                             }`}
                                     >
                                         <item.icon className="w-5 h-5" />
                                         {item.label}
-                                    </button>
+                                    </motion.button>
                                 ))}
                             </div>
                         </motion.div>
@@ -796,32 +822,34 @@ const Portfolio = () => {
             <section
                 id="apropos"
                 ref={(el) => { sectionsRef.current['apropos'] = el as HTMLDivElement | null; }}
-                className="px-6 py-16 md:px-12 lg:px-24 bg-gradient-to-b from-white to-gray-50"
+                className="px-4 sm:px-6 py-12 sm:py-16 md:px-12 lg:px-24 bg-gradient-to-b from-white to-gray-50 overflow-x-hidden"
             >
-                <div className="max-w-6xl mx-auto">
+                <div className="w-full max-w-6xl mx-auto">
                     <motion.div
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
                         transition={{ duration: 0.6 }}
                         viewport={{ once: true }}
-                        className="text-center mb-12"
+                        className="text-center mb-8 sm:mb-12 px-2"
                     >
-                        <h2 className="text-3xl md:text-5xl text-gray-400 font-bold mb-4">
+                        <h2 className="text-2xl sm:text-3xl md:text-5xl text-gray-400 font-bold mb-2 sm:mb-4">
                             À propos de <span className="text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text">moi</span>
                         </h2>
-                        <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+                        <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4">
                             Passionné par le développement web et les nouvelles technologies
                         </p>
                     </motion.div>
 
-                    <div className="grid lg:grid-cols-2 gap-12 items-center">
+                    <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-12">
                         <motion.div
                             initial={{ opacity: 0, x: -20 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.6 }}
                             viewport={{ once: true }}
+                            className="w-full"
                         >
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                            {/* Cards responsive */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
                                 {[
                                     { icon: User, label: 'Âge', value: '23 ans' },
                                     { icon: GraduationCap, label: 'Niveau', value: 'Licence en Informatique' },
@@ -833,26 +861,27 @@ const Portfolio = () => {
                                         whileInView={{ opacity: 1, y: 0 }}
                                         transition={{ duration: 0.5, delay: index * 0.1 }}
                                         viewport={{ once: true }}
-                                        className="bg-white p-6 rounded-xl shadow-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
+                                        className="bg-white p-4 sm:p-6 rounded-xl shadow-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-xl w-full"
                                     >
-                                        <item.icon className="w-8 h-8 text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text mx-auto mb-4" />
-                                        <p className="text-gray-500 font-bold text-xl">{item.label}</p>
-                                        <p className="text-gray-400 text-sm">{item.value}</p>
+                                        <item.icon className="w-6 h-6 sm:w-8 sm:h-8 text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text mx-auto mb-2 sm:mb-4" />
+                                        <p className="text-gray-500 font-bold text-base sm:text-xl">{item.label}</p>
+                                        <p className="text-gray-400 text-xs sm:text-sm break-words">{item.value}</p>
                                     </motion.div>
                                 ))}
                             </div>
 
-                            <div className="space-y-6">
-                                <div className="bg-white p-8 rounded-2xl shadow-lg">
-                                    <h3 className="text-2xl font-bold mb-4 text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text">
+                            {/* Section motivation */}
+                            <div className="space-y-4 sm:space-y-6">
+                                <div className="bg-white p-6 sm:p-8 rounded-xl sm:rounded-2xl shadow-lg">
+                                    <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text">
                                         Ma motivation
                                     </h3>
-                                    <p className="text-gray-700 leading-relaxed">
+                                    <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
                                         Développeur Full Stack passionné par la création de solutions web modernes
                                         et performantes. Mon parcours en 3ᵉ année Informatique m'a permis d'acquérir
                                         une solide base technique et une passion pour l'apprentissage continu.
                                     </p>
-                                    <p className="text-gray-700 leading-relaxed mt-4">
+                                    <p className="text-sm sm:text-base text-gray-700 leading-relaxed mt-3 sm:mt-4">
                                         Je suis constamment à la recherche de nouveaux défis qui me permettront
                                         de progresser et de livrer des solutions innovantes qui répondent aux
                                         besoins des clients avec excellence et professionnalisme.
@@ -866,13 +895,14 @@ const Portfolio = () => {
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.6 }}
                             viewport={{ once: true }}
-                            className="space-y-6"
+                            className="space-y-4 sm:space-y-6 w-full"
                         >
-                            <div className="bg-gradient-to-br from-violet-500 to-pink-600 p-8 rounded-2xl text-white">
-                                <h3 className="text-2xl font-bold mb-4">
+                            {/* Approche */}
+                            <div className="bg-gradient-to-br from-violet-500 to-pink-600 p-6 sm:p-8 rounded-xl sm:rounded-2xl text-white">
+                                <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">
                                     Mon approche
                                 </h3>
-                                <ul className="space-y-3">
+                                <ul className="space-y-2 sm:space-y-3">
                                     {[
                                         'Développement centré utilisateur',
                                         'Code propre et maintenable',
@@ -885,62 +915,73 @@ const Portfolio = () => {
                                             whileInView={{ opacity: 1, x: 0 }}
                                             transition={{ duration: 0.3, delay: index * 0.1 }}
                                             viewport={{ once: true }}
-                                            className="flex items-center gap-3"
+                                            className="flex items-center gap-2 sm:gap-3 text-sm sm:text-base"
                                         >
-                                            <div className="w-2 h-2 bg-white rounded-full"></div>
-                                            <span>{item}</span>
+                                            <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full flex-shrink-0"></div>
+                                            <span className="break-words">{item}</span>
                                         </motion.li>
                                     ))}
                                 </ul>
                             </div>
 
-                            <div className="bg-white p-8 rounded-2xl shadow-lg">
-                                <h3 className="text-2xl font-bold mb-4 text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text">
+                            {/* Contact rapide */}
+                            <div className="bg-white p-6 sm:p-8 rounded-xl sm:rounded-2xl shadow-lg">
+                                <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4 text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text">
                                     Contact rapide
                                 </h3>
-                                <div className="space-y-4">
+                                <div className="space-y-3 sm:space-y-4">
+                                    {/* Email */}
                                     <motion.a
                                         href="mailto:harilalainafitiavana@gmail.com"
                                         whileHover={{ x: 5 }}
-                                        className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group"
+                                        className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group"
                                     >
-                                        <Mail className="w-5 h-5 text-violet-500 group-hover:scale-110 transition-transform" />
-                                        <span className="font-medium text-violet-500">harilalainafitiavana@gmail.com</span>
+                                        <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-violet-500 group-hover:scale-110 transition-transform flex-shrink-0" />
+                                        <span className="font-medium text-violet-500 text-sm sm:text-base break-all">
+                                            harilalainafitiavana@gmail.com
+                                        </span>
                                     </motion.a>
 
+                                    {/* WhatsApp */}
                                     <motion.a
                                         href="https://wa.me/261336691909"
                                         whileHover={{ x: 5 }}
-                                        className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group"
+                                        className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group"
                                     >
-                                        <Phone className="w-5 h-5 text-green-500 group-hover:scale-110 transition-transform" />
-                                        <span className="font-medium text-green-500">WhatsApp: 034 79 647 92</span>
+                                        <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 group-hover:scale-110 transition-transform flex-shrink-0" />
+                                        <span className="font-medium text-green-500 text-sm sm:text-base">
+                                            WhatsApp: 034 79 647 92
+                                        </span>
                                     </motion.a>
 
-                                    {/* Bouton Télécharger CV - NOUVEAU */}
+                                    {/* CV */}
                                     <motion.a
-                                        href={cv} // ← Chemin vers votre CV dans /public
+                                        href={cv}
                                         download="CV_Harilalaina_Fitiavana.pdf"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         whileHover={{ x: 5, scale: 1.02 }}
                                         whileTap={{ scale: 0.98 }}
-                                        className="flex items-center justify-between p-4 bg-gradient-to-r from-violet-50 to-pink-50 rounded-lg hover:from-violet-100 hover:to-pink-100 transition-all duration-300 group border border-violet-200"
+                                        className="flex items-center justify-between p-3 sm:p-4 bg-gradient-to-r from-violet-50 to-pink-50 rounded-lg hover:from-violet-100 hover:to-pink-100 transition-all duration-300 group border border-violet-200"
                                     >
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-10 h-10 bg-gradient-to-r from-violet-500 to-pink-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
-                                                <FileText className="w-5 h-5 text-white" />
+                                        <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+                                            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-violet-500 to-pink-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform flex-shrink-0">
+                                                <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                                             </div>
-                                            <div>
-                                                <span className="font-bold text-gray-800 block">Télécharger mon CV</span>
-                                                <span className="text-sm text-gray-600">PDF - Mise à jour récente</span>
+                                            <div className="min-w-0">
+                                                <span className="font-bold text-gray-800 block text-xs sm:text-sm truncate">
+                                                    Télécharger mon CV
+                                                </span>
+                                                <span className="text-xs text-gray-600 block truncate">
+                                                    PDF - Mise à jour récente
+                                                </span>
                                             </div>
                                         </div>
-                                        <div className="flex items-center gap-2">
-                                            <span className="text-xs px-2 py-1 bg-violet-100 text-violet-700 rounded-full font-medium">
+                                        <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0 ml-2">
+                                            <span className="text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 bg-violet-100 text-violet-700 rounded-full font-medium">
                                                 PDF
                                             </span>
-                                            <Download className="w-4 h-4 text-violet-500 group-hover:translate-y-1 transition-transform" />
+                                            <Download className="w-3 h-3 sm:w-4 sm:h-4 text-violet-500 group-hover:translate-y-1 transition-transform" />
                                         </div>
                                     </motion.a>
                                 </div>
@@ -1566,72 +1607,74 @@ const Portfolio = () => {
             <section
                 id="contact"
                 ref={(el) => { sectionsRef.current['contact'] = el as HTMLDivElement | null; }}
-                className="px-6 py-16 md:px-12 lg:px-24"
+                className="px-4 sm:px-6 py-12 sm:py-16 md:px-12 lg:px-24 overflow-x-hidden"
             >
-                <div className="max-w-6xl mx-auto">
+                <div className="w-full max-w-6xl mx-auto">
                     <motion.div
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
                         transition={{ duration: 0.6 }}
                         viewport={{ once: true }}
-                        className="text-center mb-12"
+                        className="text-center mb-8 sm:mb-12 px-2"
                     >
-                        <h2 className="text-3xl text-gray-400 md:text-5xl font-bold mb-4">
+                        <h2 className="text-2xl sm:text-3xl md:text-5xl text-gray-400 font-bold mb-2 sm:mb-4">
                             Travaillons <span className="text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text">ensemble</span>
                         </h2>
-                        <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+                        <p className="text-sm sm:text-base md:text-xl text-gray-600 max-w-3xl mx-auto px-4">
                             Discutons de votre projet et voyons comment je peux vous aider à le réaliser
                         </p>
                     </motion.div>
 
-                    <div className="grid lg:grid-cols-2 gap-12">
+                    <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-12">
+                        {/* Formulaire de contact */}
                         <motion.div
                             initial={{ opacity: 0, x: -20 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.6 }}
                             viewport={{ once: true }}
+                            className="w-full"
                         >
-                            <div className="bg-white rounded-2xl shadow-xl p-8">
-                                <h3 className="text-2xl font-bold mb-6 text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text">
+                            <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-4 sm:p-6 md:p-8">
+                                <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text">
                                     Envoyez-moi un message
                                 </h3>
 
-                                <form onSubmit={handleSubmit} className="space-y-6">
+                                <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
                                     <div>
-                                        <label className="block text-gray-700 mb-2">Nom</label>
+                                        <label className="block text-gray-700 mb-1 sm:mb-2 text-sm sm:text-base">Nom</label>
                                         <input
                                             type="text"
                                             name="name"
                                             value={formData.name}
                                             onChange={handleChange}
                                             required
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent outline-none transition"
+                                            className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent outline-none transition text-sm sm:text-base"
                                             placeholder="Votre nom"
                                         />
                                     </div>
 
                                     <div>
-                                        <label className="block text-gray-700 mb-2">Email</label>
+                                        <label className="block text-gray-700 mb-1 sm:mb-2 text-sm sm:text-base">Email</label>
                                         <input
                                             type="email"
                                             name="email"
                                             value={formData.email}
                                             onChange={handleChange}
                                             required
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent outline-none transition"
+                                            className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent outline-none transition text-sm sm:text-base"
                                             placeholder="votre@email.com"
                                         />
                                     </div>
 
                                     <div>
-                                        <label className="block text-gray-700 mb-2">Message</label>
+                                        <label className="block text-gray-700 mb-1 sm:mb-2 text-sm sm:text-base">Message</label>
                                         <textarea
                                             name="message"
                                             value={formData.message}
                                             onChange={handleChange}
                                             required
                                             rows={4}
-                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent outline-none transition"
+                                            className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent outline-none transition text-sm sm:text-base"
                                             placeholder="Décrivez votre projet..."
                                         />
                                     </div>
@@ -1640,17 +1683,17 @@ const Portfolio = () => {
                                         type="submit"
                                         whileHover={{ scale: 1.05 }}
                                         whileTap={{ scale: 0.95 }}
-                                        className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-violet-500 to-pink-600 text-white rounded-lg hover:opacity-90 transition-opacity text-lg font-medium"
+                                        className="w-full flex items-center justify-center gap-2 px-4 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-violet-500 to-pink-600 text-white rounded-lg hover:opacity-90 transition-opacity text-sm sm:text-base font-medium"
                                     >
                                         {isSubmitted ? (
                                             <>
-                                                <Check size={20} />
-                                                Message envoyé !
+                                                <Check size={18} className="sm:w-5 sm:h-5" />
+                                                <span>Message envoyé !</span>
                                             </>
                                         ) : (
                                             <>
-                                                <Send size={20} />
-                                                Envoyer le message
+                                                <Send size={18} className="sm:w-5 sm:h-5" />
+                                                <span>Envoyer le message</span>
                                             </>
                                         )}
                                     </motion.button>
@@ -1658,56 +1701,67 @@ const Portfolio = () => {
                             </div>
                         </motion.div>
 
+                        {/* Informations de contact */}
                         <motion.div
                             initial={{ opacity: 0, x: 20 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.6 }}
                             viewport={{ once: true }}
-                            className="space-y-6"
+                            className="space-y-4 sm:space-y-6 w-full"
                         >
-                            <div className="bg-gradient-to-br from-violet-500 to-pink-600 rounded-2xl p-8 text-white">
-                                <h3 className="text-2xl font-bold mb-6">Informations de contact</h3>
+                            {/* Contact info - Version mobile optimisée */}
+                            <div className="bg-gradient-to-br from-violet-500 to-pink-600 rounded-xl sm:rounded-2xl p-5 sm:p-6 md:p-8 text-white">
+                                <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Informations de contact</h3>
 
-                                <div className="space-y-6">
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                                            <Mail className="w-6 h-6" />
+                                <div className="space-y-4 sm:space-y-6">
+                                    {/* Email */}
+                                    <div className="flex items-center gap-3 sm:gap-4">
+                                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <Mail className="w-5 h-5 sm:w-6 sm:h-6" />
                                         </div>
-                                        <div>
-                                            <p className="text-sm opacity-80">Email</p>
+                                        <div className="min-w-0">
+                                            <p className="text-xs sm:text-sm opacity-80">Email</p>
                                             <a
                                                 href="mailto:harilalainafitiavana@gmail.com"
-                                                className="font-medium hover:underline"
+                                                className="font-medium hover:underline text-sm sm:text-base break-all block"
                                             >
                                                 harilalainafitiavana@gmail.com
                                             </a>
                                         </div>
                                     </div>
 
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                                            <Phone className="w-6 h-6" />
+                                    {/* Téléphone */}
+                                    <div className="flex items-center gap-3 sm:gap-4">
+                                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <Phone className="w-5 h-5 sm:w-6 sm:h-6" />
                                         </div>
-                                        <div>
-                                            <p className="text-sm opacity-80">Téléphone</p>
+                                        <div className="min-w-0">
+                                            <p className="text-xs sm:text-sm opacity-80">Téléphone</p>
                                             <a
                                                 href="tel:+261347964792"
-                                                className="font-medium hover:underline"
+                                                className="font-medium hover:underline text-sm sm:text-base block"
                                             >
-                                                034 79 647 92 - 033 66 919 09
+                                                034 79 647 92
+                                            </a>
+                                            <a
+                                                href="tel:+261336691909"
+                                                className="font-medium hover:underline text-sm sm:text-base block"
+                                            >
+                                                033 66 919 09
                                             </a>
                                         </div>
                                     </div>
 
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                                            <MessageSquare className="w-6 h-6" />
+                                    {/* WhatsApp */}
+                                    <div className="flex items-center gap-3 sm:gap-4">
+                                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6" />
                                         </div>
-                                        <div>
-                                            <p className="text-sm opacity-80">WhatsApp</p>
+                                        <div className="min-w-0">
+                                            <p className="text-xs sm:text-sm opacity-80">WhatsApp</p>
                                             <a
                                                 href="https://wa.me/261336691909"
-                                                className="font-medium hover:underline"
+                                                className="font-medium hover:underline text-sm sm:text-base block"
                                             >
                                                 034 79 647 92
                                             </a>
@@ -1716,23 +1770,26 @@ const Portfolio = () => {
                                 </div>
                             </div>
 
-                            <div className="bg-white rounded-2xl shadow-xl p-8">
-                                <h3 className="text-2xl font-bold mb-6 text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text">
+                            {/* Disponibilité et GitHub */}
+                            <div className="bg-white rounded-xl sm:rounded-2xl shadow-xl p-5 sm:p-6 md:p-8">
+                                <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text">
                                     Disponibilité
                                 </h3>
-                                <p className="text-gray-600 mb-4">
+                                <p className="text-sm sm:text-base text-gray-600 mb-4">
                                     Je suis disponible pour des missions freelance, des collaborations
                                     ou des opportunités en CDI. N'hésitez pas à me contacter pour
                                     discuter de votre projet.
                                 </p>
 
                                 {/* GitHub Info */}
-                                <div className="mt-6 p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg">
+                                <div className="p-3 sm:p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg">
                                     <div className="flex items-center gap-3">
-                                        <Github className="w-6 h-6 text-gray-800" />
-                                        <div>
-                                            <p className="text-sm text-gray-600">GitHub</p>
-                                            <p className="font-mono text-gray-800">harilalainafitiavana</p>
+                                        <Github className="w-5 h-5 sm:w-6 sm:h-6 text-gray-800 flex-shrink-0" />
+                                        <div className="min-w-0">
+                                            <p className="text-xs sm:text-sm text-gray-600">GitHub</p>
+                                            <p className="font-mono text-sm sm:text-base text-gray-800 truncate">
+                                                harilalainafitiavana
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -1742,17 +1799,17 @@ const Portfolio = () => {
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
                                     onClick={() => setShowContacts(!showContacts)}
-                                    className="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-violet-500/10 to-pink-600/10 text-violet-600 rounded-lg hover:opacity-90 transition-opacity w-full justify-center"
+                                    className="mt-4 sm:mt-6 inline-flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 bg-gradient-to-r from-violet-500/10 to-pink-600/10 text-violet-600 rounded-lg hover:opacity-90 transition-opacity w-full justify-center text-sm sm:text-base"
                                 >
                                     {showContacts ? (
                                         <>
-                                            <ChevronUp className="w-5 h-5" />
-                                            Masquer les contacts supplémentaires
+                                            <ChevronUp className="w-4 h-4 sm:w-5 sm:h-5" />
+                                            <span>Masquer les contacts supplémentaires</span>
                                         </>
                                     ) : (
                                         <>
-                                            <ArrowRight className="w-5 h-5" />
-                                            Afficher mes contacts
+                                            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                                            <span>Afficher mes contacts</span>
                                         </>
                                     )}
                                 </motion.button>
@@ -1764,28 +1821,39 @@ const Portfolio = () => {
                                             initial={{ opacity: 0, height: 0 }}
                                             animate={{ opacity: 1, height: 'auto' }}
                                             exit={{ opacity: 0, height: 0 }}
-                                            className="overflow-hidden mt-6"
+                                            className="overflow-hidden mt-4 sm:mt-6"
                                         >
-                                            <div className="space-y-4 pt-4 border-t">
+                                            <div className="space-y-3 sm:space-y-4 pt-3 sm:pt-4 border-t">
                                                 <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                                                    <Phone className="w-5 h-5 text-violet-500" />
-                                                    <div>
-                                                        <p className="text-sm text-gray-500">Téléphone principal</p>
-                                                        <p className="font-medium text-violet-500">034 79 647 92</p>
+                                                    <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-violet-500 flex-shrink-0" />
+                                                    <div className="min-w-0">
+                                                        <p className="text-xs text-gray-500">Téléphone principal</p>
+                                                        <div className='flex flex-col gap-1 md:flex-row md:gap-2'>
+                                                            <p className="font-medium text-violet-500 text-sm sm:text-base">
+                                                                034 79 647 92 -
+                                                            </p>
+                                                            <p className="font-medium text-violet-500 text-sm sm:text-base">
+                                                                033 66 919 09
+                                                            </p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                                                    <MessageSquare className="w-5 h-5 text-green-500" />
-                                                    <div>
-                                                        <p className="text-sm text-gray-500">WhatsApp professionnel</p>
-                                                        <p className="font-medium text-green-500">034 79 647 92 - 033 66 919 09</p>
+                                                    <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0" />
+                                                    <div className="min-w-0">
+                                                        <p className="text-xs text-gray-500">WhatsApp professionnel</p>
+                                                        <p className="font-medium text-green-500 text-sm sm:text-base">
+                                                            034 79 647 92
+                                                        </p>
                                                     </div>
                                                 </div>
                                                 <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                                                    <Mail className="w-5 h-5 text-red-500" />
-                                                    <div>
-                                                        <p className="text-sm text-gray-500">Email professionnel</p>
-                                                        <p className="font-medium text-red-400">harilalainafitiavana@gmail.com</p>
+                                                    <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-red-500 flex-shrink-0" />
+                                                    <div className="min-w-0">
+                                                        <p className="text-xs text-gray-500">Email professionnel</p>
+                                                        <p className="font-medium text-red-400 text-sm sm:text-base break-all">
+                                                            harilalainafitiavana@gmail.com
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>
