@@ -606,277 +606,338 @@ const Portfolio = () => {
             </motion.header>
 
             {/* Hero Section - avec background sombre professionnel */}
-            <section
-                id="accueil"
-                ref={(el) => { sectionsRef.current['accueil'] = el as HTMLDivElement | null; }}
-                className="min-h-screen px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 py-12 sm:py-16 md:py-20 flex flex-col justify-center pt-16 sm:pt-20 relative overflow-hidden"
+<section
+    id="accueil"
+    ref={(el) => { sectionsRef.current['accueil'] = el as HTMLDivElement | null; }}
+    className="min-h-screen px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 py-12 sm:py-16 md:py-20 flex flex-col justify-center pt-16 sm:pt-20 relative overflow-hidden"
+>
+    {/* BACKGROUND - Sombre avec étoiles animées */}
+    <div className="absolute inset-0 z-0">
+        {/* Dégradé principal - Plus sombre */}
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950"></div>
+        
+        {/* Dégradé violet/rose très subtil en arrière-plan */}
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-950/20 via-transparent to-pink-950/20"></div>
+        
+        {/* Overlay sombre pour améliorer la lisibilité */}
+        <div className="absolute inset-0 bg-black/40"></div>
+        
+        {/* Étoiles animées - Plus brillantes */}
+        <div className="absolute inset-0">
+            {[...Array(100)].map((_, i) => (
+                <motion.div
+                    key={i}
+                    initial={{
+                        x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 1000),
+                        y: Math.random() * (typeof window !== 'undefined' ? window.innerHeight : 800),
+                        opacity: Math.random() * 0.6 + 0.3,
+                        scale: Math.random() * 0.6 + 0.3
+                    }}
+                    animate={{
+                        opacity: [null, Math.random() * 0.9 + 0.4, null],
+                        scale: [null, Math.random() * 0.8 + 0.4, null],
+                    }}
+                    transition={{
+                        duration: Math.random() * 4 + 2,
+                        repeat: Infinity,
+                        delay: Math.random() * 5,
+                        ease: "easeInOut"
+                    }}
+                    className="absolute bg-white rounded-full"
+                    style={{
+                        width: Math.random() * 2 + 1 + 'px',
+                        height: Math.random() * 2 + 1 + 'px',
+                        left: `${Math.random() * 100}%`,
+                        top: `${Math.random() * 100}%`,
+                        boxShadow: '0 0 6px rgba(255,255,255,0.8)'
+                    }}
+                />
+            ))}
+        </div>
+        
+        {/* Étoiles filantes */}
+        {[...Array(3)].map((_, i) => (
+            <motion.div
+                key={`shooting-${i}`}
+                initial={{
+                    x: '-20%',
+                    y: '-20%',
+                    opacity: 0
+                }}
+                animate={{
+                    x: '130%',
+                    y: '130%',
+                    opacity: [0, 0.9, 0]
+                }}
+                transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    delay: i * 6,
+                    ease: "linear"
+                }}
+                className="absolute w-1 h-1 bg-white rounded-full"
+                style={{
+                    width: '2px',
+                    height: '2px',
+                    boxShadow: '0 0 10px rgba(255,255,255,0.9)'
+                }}
+            />
+        ))}
+        
+        {/* Formes flottantes très subtiles et sombres */}
+        <motion.div
+            animate={{
+                scale: [1, 1.05, 1],
+                x: ['-1%', '1%', '-1%'],
+            }}
+            transition={{
+                duration: 20,
+                repeat: Infinity,
+                ease: "easeInOut"
+            }}
+            className="absolute top-20 left-10 w-96 h-96 bg-purple-600/5 rounded-full blur-[120px]"
+        />
+        
+        <motion.div
+            animate={{
+                scale: [1.05, 1, 1.05],
+                x: ['1%', '-1%', '1%'],
+            }}
+            transition={{
+                duration: 22,
+                repeat: Infinity,
+                ease: "easeInOut"
+            }}
+            className="absolute bottom-20 right-10 w-[500px] h-[500px] bg-pink-600/5 rounded-full blur-[140px]"
+        />
+        
+        {/* Grille très subtile */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.02)_1px,_transparent_1px)] bg-[size:60px_60px]" />
+    </div>
+
+    <div className="max-w-7xl mx-auto w-full relative z-10">
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 xl:gap-16"
+        >
+            {/* Texte principal */}
+            <div className="w-full lg:w-1/2 text-center lg:text-left order-2 lg:order-1">
+                <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.2, duration: 0.5 }}
+                    className="mb-6 sm:mb-8"
+                >
+                    <span className="inline-block px-4 py-2 bg-gradient-to-r from-violet-500/30 to-pink-500/30 backdrop-blur-sm rounded-full text-violet-200 font-medium text-sm sm:text-base mb-3 sm:mb-4 border border-white/20">
+                        Développeur Full Stack
+                    </span>
+                    <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-3 sm:mb-4 leading-tight">
+                        Bonjour, je suis{' '}
+                        <span className="text-transparent bg-gradient-to-r from-violet-400 to-pink-500 bg-clip-text">
+                            Harilalaina Fitiavana
+                        </span>
+                    </h1>
+                    <p className="text-base sm:text-lg md:text-xl text-gray-200 mb-6 sm:mb-8 leading-relaxed">
+                        Passionné par la création de solutions web modernes et performantes.
+                        Actuellement licencié en Informatique – Parcours Développeur Web.
+                    </p>
+                </motion.div>
+
+                {/* Boutons d'action */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4, duration: 0.5 }}
+                    className="flex flex-col xs:flex-row gap-3 sm:gap-4 mb-6 sm:mb-8"
+                >
+                    <motion.a
+                        href="https://github.com/harilalainafitiavana"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex items-center justify-center gap-2 px-4 sm:px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/30 text-white rounded-lg hover:bg-white/20 transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
+                    >
+                        <Github size={18} className="sm:w-5 sm:h-5" />
+                        Voir mon GitHub
+                    </motion.a>
+                    <motion.a
+                        href="#contact"
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex items-center justify-center gap-2 px-4 sm:px-6 py-3 bg-gradient-to-r from-violet-600 to-pink-600 text-white rounded-lg hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
+                    >
+                        <Mail size={18} className="sm:w-5 sm:h-5" />
+                        Contactez-moi
+                    </motion.a>
+                </motion.div>
+
+                {/* Liens sociaux */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.6, duration: 0.5 }}
+                    className="flex justify-center lg:justify-start gap-4 sm:gap-6"
+                >
+                    {socialLinks.map((social) => (
+                        <motion.a
+                            key={social.label}
+                            href={social.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            whileHover={{ scale: 1.2, y: -3 }}
+                            whileTap={{ scale: 0.9 }}
+                            className="text-gray-300 hover:text-white transition-all duration-300"
+                        >
+                            <social.icon size={20} className="sm:w-6 sm:h-6" />
+                        </motion.a>
+                    ))}
+                </motion.div>
+            </div>
+
+            {/* Image avec lumière rose animée */}
+            <motion.div
+                initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
+                animate={{
+                    opacity: 1,
+                    scale: 1,
+                    rotate: 0,
+                }}
+                transition={{
+                    duration: 0.8,
+                    rotate: { duration: 0.6 },
+                }}
+                whileHover={{
+                    scale: 1.05,
+                    rotate: 2,
+                    transition: { duration: 0.3 }
+                }}
+                className="relative w-full lg:w-1/2 order-1 lg:order-2 mb-8 lg:mb-0"
             >
-                {/* NOUVEAU BACKGROUND - Effet de morphing avec formes flottantes */}
-                <div className="absolute inset-0 z-0">
-                    {/* Dégradé de base */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"></div>
+                {/* Lumière rose pulsante */}
+                <motion.div
+                    animate={{
+                        scale: [1, 1.3, 1],
+                        opacity: [0.3, 0.7, 0.3],
+                    }}
+                    transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                    }}
+                    className="absolute inset-0 bg-gradient-to-r from-pink-500/40 to-violet-500/40 rounded-full blur-2xl -z-10"
+                />
+                
+                {/* Deuxième couche de lumière */}
+                <motion.div
+                    animate={{
+                        scale: [1.1, 1.4, 1.1],
+                        opacity: [0.15, 0.4, 0.15],
+                    }}
+                    transition={{
+                        duration: 2.5,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: 0.5
+                    }}
+                    className="absolute inset-0 bg-gradient-to-r from-pink-400/30 to-violet-400/30 rounded-full blur-3xl -z-20"
+                />
 
-                    {/* Formes flottantes - Grande forme violette */}
+                {/* Anneaux concentriques animés */}
+                <div className="relative mx-auto w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96">
+                    {/* Anneau externe */}
                     <motion.div
-                        animate={{
-                            scale: [1, 1.2, 1],
-                            x: ['-5%', '5%', '-5%'],
-                            y: ['-5%', '5%', '-5%'],
-                        }}
-                        transition={{
-                            duration: 15,
-                            repeat: Infinity,
-                            ease: "easeInOut"
-                        }}
-                        className="absolute top-20 left-10 w-72 h-72 bg-violet-500/20 rounded-full blur-3xl"
-                    />
-
-                    {/* Formes flottantes - Grande forme rose */}
-                    <motion.div
-                        animate={{
-                            scale: [1.2, 1, 1.2],
-                            x: ['5%', '-5%', '5%'],
-                            y: ['5%', '-5%', '5%'],
-                        }}
-                        transition={{
-                            duration: 18,
-                            repeat: Infinity,
-                            ease: "easeInOut"
-                        }}
-                        className="absolute bottom-20 right-10 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl"
-                    />
-
-                    {/* Formes flottantes - Forme centrale cyan */}
-                    <motion.div
-                        animate={{
-                            scale: [1, 1.3, 1],
-                            x: ['-10%', '10%', '-10%'],
-                        }}
+                        animate={{ rotate: 360 }}
                         transition={{
                             duration: 20,
                             repeat: Infinity,
-                            ease: "easeInOut"
+                            ease: "linear"
                         }}
-                        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-3xl"
+                        className="absolute inset-0 border-4 border-transparent border-t-pink-400/60 border-r-violet-500/60 rounded-full"
                     />
 
-                    {/* Grille de points élégante */}
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.1)_1px,_transparent_1px)] bg-[size:40px_40px]" />
-
-                    {/* Effet de grain subtil */}
-                    {/* <div className="absolute inset-0 opacity-20 mix-blend-overlay">
-            <div className="w-full h-full bg-[url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noise)" opacity="0.4"/%3E%3C/svg%3E')] bg-repeat" />
-        </div> */}
-                </div>
-
-                <div className="max-w-7xl mx-auto w-full relative z-10">
+                    {/* Anneau intermédiaire */}
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 xl:gap-16"
-                    >
-                        {/* Texte principal */}
-                        <div className="w-full lg:w-1/2 text-center lg:text-left order-2 lg:order-1">
-                            <motion.div
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: 0.2, duration: 0.5 }}
-                                className="mb-6 sm:mb-8"
-                            >
-                                <span className="inline-block px-4 py-2 bg-gradient-to-r from-violet-500/20 to-pink-600/20 rounded-full text-violet-300 font-medium text-sm sm:text-base mb-3 sm:mb-4 backdrop-blur-sm border border-white/20">
-                                    Développeur Full Stack
-                                </span>
-                                <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-3 sm:mb-4 leading-tight">
-                                    Bonjour, je suis{' '}
-                                    <span className="text-transparent bg-gradient-to-r from-violet-400 to-pink-500 bg-clip-text">
-                                        Harilalaina Fitiavana
-                                    </span>
-                                </h1>
-                                <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8 leading-relaxed">
-                                    Passionné par la création de solutions web modernes et performantes.
-                                    Actuellement licencié en Informatique – Parcours Développeur Web.
-                                </p>
-                            </motion.div>
+                        animate={{ rotate: -360 }}
+                        transition={{
+                            duration: 15,
+                            repeat: Infinity,
+                            ease: "linear"
+                        }}
+                        className="absolute inset-4 border-4 border-transparent border-b-pink-400/40 border-l-violet-500/40 rounded-full"
+                    />
 
-                            {/* Boutons d'action */}
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.4, duration: 0.5 }}
-                                className="flex flex-col xs:flex-row gap-3 sm:gap-4 mb-6 sm:mb-8"
-                            >
-                                <motion.a
-                                    href="https://github.com/harilalainafitiavana"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    whileHover={{ scale: 1.05, y: -2 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    className="flex items-center justify-center gap-2 px-4 sm:px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white rounded-lg hover:bg-white/20 transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
-                                >
-                                    <Github size={18} className="sm:w-5 sm:h-5" />
-                                    Voir mon GitHub
-                                </motion.a>
-                                <motion.a
-                                    href="#contact"
-                                    whileHover={{ scale: 1.05, y: -2 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    className="flex items-center justify-center gap-2 px-4 sm:px-6 py-3 bg-gradient-to-r from-violet-500 to-pink-600 text-white rounded-lg hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
-                                >
-                                    <Mail size={18} className="sm:w-5 sm:h-5" />
-                                    Contactez-moi
-                                </motion.a>
-                            </motion.div>
-
-                            {/* Liens sociaux */}
-                            <motion.div
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ delay: 0.6, duration: 0.5 }}
-                                className="flex justify-center lg:justify-start gap-4 sm:gap-6"
-                            >
-                                {socialLinks.map((social) => (
-                                    <motion.a
-                                        key={social.label}
-                                        href={social.href}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        whileHover={{ scale: 1.2, y: -3 }}
-                                        whileTap={{ scale: 0.9 }}
-                                        className="text-gray-400 hover:text-white transition-all duration-300"
-                                    >
-                                        <social.icon size={20} className="sm:w-6 sm:h-6" />
-                                    </motion.a>
-                                ))}
-                            </motion.div>
-                        </div>
-
-                        {/* Image avec animations originales */}
+                    {/* Conteneur principal de l'image */}
+                    <div className="relative w-full h-full flex items-center justify-center">
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-                            animate={{
-                                opacity: 1,
-                                scale: 1,
-                                rotate: 0,
-                            }}
-                            transition={{
-                                duration: 0.8,
-                                rotate: { duration: 0.6 },
-                            }}
-                            whileHover={{
-                                scale: 1.05,
-                                rotate: 2,
-                                transition: { duration: 0.3 }
-                            }}
-                            className="relative w-full lg:w-1/2 order-1 lg:order-2 mb-8 lg:mb-0"
+                            whileHover={{ scale: 1.1 }}
+                            transition={{ duration: 0.3 }}
+                            className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-72 lg:h-72"
                         >
-                            {/* Effet de lumière pulsante original */}
+                            {/* Gradient animé derrière l'image */}
                             <motion.div
                                 animate={{
-                                    scale: [1, 1.2, 1],
-                                    opacity: [0.3, 0.6, 0.3]
+                                    backgroundPosition: ['0% 0%', '100% 100%', '0% 0%']
                                 }}
                                 transition={{
-                                    duration: 3,
+                                    duration: 8,
                                     repeat: Infinity,
-                                    ease: "easeInOut"
+                                    ease: "linear"
                                 }}
-                                className="absolute inset-0 bg-gradient-to-r from-violet-500/30 to-pink-500/30 rounded-full blur-3xl -z-10"
-                            />
-
-                            {/* Anneaux concentriques animés */}
-                            <div className="relative mx-auto w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96">
-                                {/* Anneau externe */}
-                                <motion.div
-                                    animate={{ rotate: 360 }}
-                                    transition={{
-                                        duration: 20,
-                                        repeat: Infinity,
-                                        ease: "linear"
-                                    }}
-                                    className="absolute inset-0 border-4 border-transparent border-t-violet-400/50 border-r-pink-500/50 rounded-full"
-                                />
-
-                                {/* Anneau intermédiaire */}
-                                <motion.div
-                                    animate={{ rotate: -360 }}
-                                    transition={{
-                                        duration: 15,
-                                        repeat: Infinity,
-                                        ease: "linear"
-                                    }}
-                                    className="absolute inset-4 border-4 border-transparent border-b-violet-400/30 border-l-pink-500/30 rounded-full"
-                                />
-
-                                {/* Conteneur principal de l'image */}
-                                <div className="relative w-full h-full flex items-center justify-center">
-                                    <motion.div
-                                        whileHover={{ scale: 1.1 }}
-                                        transition={{ duration: 0.3 }}
-                                        className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-72 lg:h-72"
-                                    >
-                                        {/* Gradient animé derrière l'image */}
-                                        <motion.div
-                                            animate={{
-                                                backgroundPosition: ['0% 0%', '100% 100%', '0% 0%']
-                                            }}
-                                            transition={{
-                                                duration: 8,
-                                                repeat: Infinity,
-                                                ease: "linear"
-                                            }}
-                                            className="absolute inset-0 bg-gradient-to-br from-violet-500 via-pink-600 to-violet-500 bg-[length:200%_200%] rounded-full p-1"
-                                        >
-                                            {/* Cadre */}
-                                            <div className="w-full h-full bg-gray-900 rounded-full p-1">
-                                                {/* Image avec effet de brillance */}
-                                                <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white/20 shadow-2xl">
-                                                    <img
-                                                        src="https://github.com/harilalainafitiavana/images-portefolio/blob/main/Fitiavana.png?raw=true"
-                                                        alt="Harilalaina Fitiavana - Développeur Full Stack"
-                                                        className="w-full h-full object-cover"
-                                                    />
-                                                </div>
-                                            </div>
-                                        </motion.div>
-                                    </motion.div>
-                                </div>
-                            </div>
-
-                            {/* Badge flottant */}
-                            <motion.div
-                                animate={{
-                                    y: [0, -15, 0],
-                                    rotate: [0, 5, 0, -5, 0]
-                                }}
-                                transition={{
-                                    duration: 4,
-                                    repeat: Infinity,
-                                    ease: "easeInOut"
-                                }}
-                                className="absolute -bottom-2 right-4 sm:right-8 md:right-12 lg:-right-4 lg:bottom-8 bg-white/10 backdrop-blur-md px-3 py-1 sm:px-4 sm:py-2 rounded-full shadow-lg border border-white/20"
+                                className="absolute inset-0 bg-gradient-to-br from-violet-500 via-pink-600 to-violet-500 bg-[length:200%_200%] rounded-full p-1"
                             >
-                                <span className="text-xs sm:text-sm font-semibold text-transparent bg-gradient-to-r from-violet-400 to-pink-500 bg-clip-text">
-                                    Disponible
-                                </span>
+                                {/* Cadre */}
+                                <div className="w-full h-full bg-gray-900 rounded-full p-1">
+                                    {/* Image */}
+                                    <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white/30 shadow-2xl">
+                                        <img
+                                            src="https://github.com/harilalainafitiavana/images-portefolio/blob/main/Fitiavana.png?raw=true"
+                                            alt="Harilalaina Fitiavana - Développeur Full Stack"
+                                            className="w-full h-full object-cover"
+                                        />
+                                    </div>
+                                </div>
                             </motion.div>
                         </motion.div>
-                    </motion.div>
+                    </div>
                 </div>
 
-                {/* Indicateur de défilement */}
+                {/* Badge flottant - Plus visible */}
                 <motion.div
-                    animate={{ y: [0, 10, 0] }}
+                    animate={{
+                        y: [0, -15, 0],
+                        rotate: [0, 5, 0, -5, 0]
+                    }}
                     transition={{
+                        duration: 4,
                         repeat: Infinity,
-                        duration: 2,
                         ease: "easeInOut"
                     }}
-                    className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 hidden sm:block z-10"
+                    className="absolute -bottom-2 right-4 sm:right-8 md:right-12 lg:-right-4 lg:bottom-8 bg-black/60 backdrop-blur-md px-3 py-1.5 sm:px-4 sm:py-2 rounded-full shadow-lg border border-pink-500/50"
                 >
-                    <ChevronDown className="w-6 h-6 sm:w-8 sm:h-8 text-gray-400" />
+                    <span className="text-xs sm:text-sm font-semibold text-transparent bg-gradient-to-r from-pink-400 to-violet-400 bg-clip-text">
+                        ✨ Disponible ✨
+                    </span>
                 </motion.div>
-            </section>
+            </motion.div>
+        </motion.div>
+    </div>
+
+    {/* Indicateur de défilement */}
+    <motion.div
+        animate={{ y: [0, 10, 0] }}
+        transition={{
+            repeat: Infinity,
+            duration: 2,
+            ease: "easeInOut"
+        }}
+        className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 hidden sm:block z-10"
+    >
+        <ChevronDown className="w-6 h-6 sm:w-8 sm:h-8 text-gray-400" />
+    </motion.div>
+</section>
 
             {/* About Section */}
             <section
