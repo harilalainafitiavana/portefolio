@@ -77,6 +77,9 @@ const Portfolio = () => {
     // Références pour observer les sections
     const sectionsRef = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
+    // Ajoutez cet état dans votre composant (après les autres useState)
+    const [isScrolled, setIsScrolled] = useState(false);
+
     // Données des projets
     const projects = [
         {
@@ -332,6 +335,15 @@ const Portfolio = () => {
         };
     }, []);
 
+    // Ajoutez ce useEffect pour détecter le scroll (à côté des autres useEffect)
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 50);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
     // Fonction pour l'animation de frappe Patie Popup
     const startTypingAnimation = () => {
         setIsTyping(true);
@@ -495,7 +507,10 @@ const Portfolio = () => {
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-sm"
+                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
+                    ? 'bg-white/95 backdrop-blur-md shadow-lg'
+                    : 'bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 shadow-md'
+                    }`}
             >
                 <div className="px-6 py-4 md:px-12 lg:px-24 flex items-center justify-between">
                     <motion.div
@@ -503,8 +518,14 @@ const Portfolio = () => {
                         className="flex items-center gap-2 cursor-pointer"
                         onClick={() => handleNavClick('accueil')}
                     >
-                        <Code2 className="w-8 h-8 text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text" />
-                        <span className="text-2xl font-bold text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text">
+                        <Code2 className={`w-8 h-8 ${isScrolled
+                            ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text'
+                            : 'text-white'
+                            }`} />
+                        <span className={`text-2xl font-bold ${isScrolled
+                            ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text'
+                            : 'text-white'
+                            }`}>
                             HariFitia
                         </span>
                     </motion.div>
@@ -519,7 +540,9 @@ const Portfolio = () => {
                                 onClick={() => handleNavClick(item.id)}
                                 className={`flex items-center gap-2 text-lg font-medium transition-colors ${activeSection === item.id
                                     ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text'
-                                    : 'text-gray-600 hover:text-violet-500'
+                                    : isScrolled
+                                        ? 'text-gray-600 hover:text-violet-500'
+                                        : 'text-gray-300 hover:text-white'
                                     }`}
                             >
                                 <item.icon className="w-5 h-5" />
@@ -533,11 +556,13 @@ const Portfolio = () => {
                         className="md:hidden p-2"
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                     >
-                        {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                        {isMenuOpen ?
+                            <X size={24} className={isScrolled ? 'text-gray-800' : 'text-white'} /> :
+                            <Menu size={24} className={isScrolled ? 'text-gray-800' : 'text-white'} />
+                        }
                     </button>
                 </div>
 
-                {/* Mobile Navigation */}
                 {/* Mobile Navigation */}
                 <AnimatePresence>
                     {isMenuOpen && (
@@ -546,7 +571,7 @@ const Portfolio = () => {
                             animate={{ opacity: 1, height: 'auto' }}
                             exit={{ opacity: 0, height: 0 }}
                             transition={{ duration: 0.2 }}
-                            className="md:hidden bg-white border-t overflow-hidden"
+                            className={`md:hidden border-t overflow-hidden ${isScrolled ? 'bg-white' : 'bg-gradient-to-r from-gray-900 to-gray-800'}`}
                         >
                             <div className="px-6 py-4 flex flex-col gap-4">
                                 {navItems.map((item) => (
@@ -555,11 +580,11 @@ const Portfolio = () => {
                                         whileTap={{ scale: 0.98 }}
                                         onClick={() => {
                                             handleNavClick(item.id);
-                                            setIsMenuOpen(false); // Fermer immédiatement après le clic
+                                            setIsMenuOpen(false);
                                         }}
-                                        className={`flex items-center gap-3 py-3 px-2 font-medium w-full text-left rounded-lg active:bg-gray-100 ${activeSection === item.id
+                                        className={`flex items-center gap-3 py-3 px-2 font-medium w-full text-left rounded-lg ${activeSection === item.id
                                             ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text'
-                                            : 'text-gray-600'
+                                            : isScrolled ? 'text-gray-600' : 'text-gray-300'
                                             }`}
                                     >
                                         <item.icon className="w-5 h-5" />
@@ -572,13 +597,76 @@ const Portfolio = () => {
                 </AnimatePresence>
             </motion.header>
 
-            {/* Hero Section */}
+            {/* Hero Section - avec background sombre professionnel */}
             <section
                 id="accueil"
                 ref={(el) => { sectionsRef.current['accueil'] = el as HTMLDivElement | null; }}
-                className="min-h-screen px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 py-12 sm:py-16 md:py-20 flex flex-col justify-center pt-16 sm:pt-20"
+                className="min-h-screen px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 py-12 sm:py-16 md:py-20 flex flex-col justify-center pt-16 sm:pt-20 relative overflow-hidden"
             >
-                <div className="max-w-7xl mx-auto w-full">
+                {/* Background professionnel sombre avec dégradé et effets */}
+                <div className="absolute inset-0 z-0">
+                    {/* Gradient principal sombre */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"></div>
+
+                    {/* Effet de grille subtile */}
+                    <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+
+                    {/* Effet de lumière dynamique */}
+                    <motion.div
+                        animate={{
+                            x: ['-10%', '10%', '-10%'],
+                            y: ['-10%', '10%', '-10%'],
+                        }}
+                        transition={{
+                            duration: 20,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                        }}
+                        className="absolute top-0 left-0 w-[500px] h-[500px] bg-violet-600/10 rounded-full blur-[100px]"
+                    />
+                    <motion.div
+                        animate={{
+                            x: ['10%', '-10%', '10%'],
+                            y: ['10%', '-10%', '10%'],
+                        }}
+                        transition={{
+                            duration: 25,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                        }}
+                        className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-pink-600/10 rounded-full blur-[120px]"
+                    />
+
+                    {/* Effet de particules (points lumineux) */}
+                    <div className="absolute inset-0">
+                        {[...Array(30)].map((_, i) => (
+                            <motion.div
+                                key={i}
+                                initial={{
+                                    x: Math.random() * window.innerWidth,
+                                    y: Math.random() * window.innerHeight,
+                                    opacity: Math.random() * 0.5 + 0.2
+                                }}
+                                animate={{
+                                    y: [null, -50, null],
+                                    opacity: [null, 0, null]
+                                }}
+                                transition={{
+                                    duration: Math.random() * 5 + 3,
+                                    repeat: Infinity,
+                                    delay: Math.random() * 5
+                                }}
+                                className="absolute w-1 h-1 bg-white/40 rounded-full"
+                                style={{
+                                    left: `${Math.random() * 100}%`,
+                                    top: `${Math.random() * 100}%`,
+                                }}
+                            />
+                        ))}
+                    </div>
+                </div>
+
+                <div className="max-w-7xl mx-auto w-full relative z-10">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -593,16 +681,16 @@ const Portfolio = () => {
                                 transition={{ delay: 0.2, duration: 0.5 }}
                                 className="mb-6 sm:mb-8"
                             >
-                                <span className="inline-block px-4 py-2 bg-gradient-to-r from-violet-500/10 to-pink-600/10 rounded-full text-violet-600 font-medium text-sm sm:text-base mb-3 sm:mb-4">
+                                <span className="inline-block px-4 py-2 bg-gradient-to-r from-violet-500/20 to-pink-600/20 rounded-full text-violet-300 font-medium text-sm sm:text-base mb-3 sm:mb-4 backdrop-blur-sm">
                                     Développeur Full Stack
                                 </span>
-                                <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 dark:text-gray-300 mb-3 sm:mb-4 leading-tight">
+                                <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-3 sm:mb-4 leading-tight">
                                     Bonjour, je suis{' '}
-                                    <span className="text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text">
+                                    <span className="text-transparent bg-gradient-to-r from-violet-400 to-pink-500 bg-clip-text">
                                         Harilalaina Fitiavana
                                     </span>
                                 </h1>
-                                <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-6 sm:mb-8 leading-relaxed">
+                                <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8 leading-relaxed">
                                     Passionné par la création de solutions web modernes et performantes.
                                     Actuellement licencié en Informatique – Parcours Développeur Web.
                                 </p>
@@ -621,7 +709,7 @@ const Portfolio = () => {
                                     rel="noopener noreferrer"
                                     whileHover={{ scale: 1.05, y: -2 }}
                                     whileTap={{ scale: 0.95 }}
-                                    className="flex items-center justify-center gap-2 px-4 sm:px-6 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
+                                    className="flex items-center justify-center gap-2 px-4 sm:px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20 text-white rounded-lg hover:bg-white/20 transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base"
                                 >
                                     <Github size={18} className="sm:w-5 sm:h-5" />
                                     Voir mon GitHub
@@ -652,7 +740,7 @@ const Portfolio = () => {
                                         rel="noopener noreferrer"
                                         whileHover={{ scale: 1.2, y: -3 }}
                                         whileTap={{ scale: 0.9 }}
-                                        className={`text-gray-600 dark:text-gray-400 ${social.color} transition-all duration-300`}
+                                        className="text-gray-400 hover:text-white transition-all duration-300"
                                     >
                                         <social.icon size={20} className="sm:w-6 sm:h-6" />
                                     </motion.a>
@@ -667,16 +755,10 @@ const Portfolio = () => {
                                 opacity: 1,
                                 scale: 1,
                                 rotate: 0,
-                                // y: [0, -10, 0] // Flottement léger
                             }}
                             transition={{
                                 duration: 0.8,
                                 rotate: { duration: 0.6 },
-                                y: {
-                                    repeat: Infinity,
-                                    duration: 3,
-                                    ease: "easeInOut"
-                                }
                             }}
                             whileHover={{
                                 scale: 1.05,
@@ -688,15 +770,15 @@ const Portfolio = () => {
                             {/* Effet de lumière pulsante */}
                             <motion.div
                                 animate={{
-                                    scale: [1, 1.1, 1],
-                                    opacity: [0.3, 0.5, 0.3]
+                                    scale: [1, 1.2, 1],
+                                    opacity: [0.3, 0.6, 0.3]
                                 }}
                                 transition={{
                                     duration: 3,
                                     repeat: Infinity,
                                     ease: "easeInOut"
                                 }}
-                                className="absolute inset-0 bg-gradient-to-r from-violet-200 to-pink-300 rounded-full blur-3xl -z-10"
+                                className="absolute inset-0 bg-gradient-to-r from-violet-500/30 to-pink-500/30 rounded-full blur-3xl -z-10"
                             />
 
                             {/* Anneaux concentriques animés */}
@@ -709,7 +791,7 @@ const Portfolio = () => {
                                         repeat: Infinity,
                                         ease: "linear"
                                     }}
-                                    className="absolute inset-0 border-4 border-transparent border-t-violet-500/30 border-r-pink-600/30 rounded-full"
+                                    className="absolute inset-0 border-4 border-transparent border-t-violet-400/50 border-r-pink-500/50 rounded-full"
                                 />
 
                                 {/* Anneau intermédiaire */}
@@ -720,7 +802,7 @@ const Portfolio = () => {
                                         repeat: Infinity,
                                         ease: "linear"
                                     }}
-                                    className="absolute inset-4 border-3 border-transparent border-b-violet-500/20 border-l-pink-600/20 rounded-full"
+                                    className="absolute inset-4 border-3 border-transparent border-b-violet-400/30 border-l-pink-500/30 rounded-full"
                                 />
 
                                 {/* Conteneur principal de l'image */}
@@ -742,10 +824,10 @@ const Portfolio = () => {
                                             }}
                                             className="absolute inset-0 bg-gradient-to-br from-violet-500 via-pink-600 to-violet-500 bg-[length:200%_200%] rounded-full p-1"
                                         >
-                                            {/* Cadre blanc */}
-                                            <div className="w-full h-full bg-white rounded-full p-1">
+                                            {/* Cadre */}
+                                            <div className="w-full h-full bg-gray-900 rounded-full p-1">
                                                 {/* Image avec effet de brillance */}
-                                                <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white shadow-2xl">
+                                                <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white/20 shadow-2xl">
                                                     <motion.img
                                                         src='https://github.com/harilalainafitiavana/images-portefolio/blob/main/Fitiavana.png?raw=true'
                                                         alt="Harilalaina Fitiavana - Développeur Full Stack"
@@ -758,27 +840,6 @@ const Portfolio = () => {
                                                 </div>
                                             </div>
                                         </motion.div>
-
-                                        {/* Points décoratifs */}
-                                        {/* {[...Array(4)].map((_, i) => (
-                                            <motion.div
-                                                key={i}
-                                                animate={{
-                                                    y: [0, -10, 0],
-                                                    opacity: [0.5, 1, 0.5]
-                                                }}
-                                                transition={{
-                                                    duration: 2,
-                                                    delay: i * 0.5,
-                                                    repeat: Infinity
-                                                }}
-                                                className={`absolute w-3 h-3 rounded-full bg-gradient-to-r from-violet-500 to-pink-600 ${i === 0 ? 'top-0 left-1/2 -translate-x-1/2 -translate-y-1/2' :
-                                                    i === 1 ? 'right-0 top-1/2 translate-x-1/2 -translate-y-1/2' :
-                                                        i === 2 ? 'bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2' :
-                                                            'left-0 top-1/2 -translate-x-1/2 -translate-y-1/2'
-                                                    }`}
-                                            />
-                                        ))} */}
                                     </motion.div>
                                 </div>
                             </div>
@@ -794,9 +855,9 @@ const Portfolio = () => {
                                     repeat: Infinity,
                                     ease: "easeInOut"
                                 }}
-                                className="absolute -bottom-2 right-4 sm:right-8 md:right-12 lg:-right-4 lg:bottom-8 bg-white dark:bg-gray-800 px-3 py-1 sm:px-4 sm:py-2 rounded-full shadow-lg border border-gray-200 dark:border-gray-700"
+                                className="absolute -bottom-2 right-4 sm:right-8 md:right-12 lg:-right-4 lg:bottom-8 bg-white/10 backdrop-blur-md px-3 py-1 sm:px-4 sm:py-2 rounded-full shadow-lg border border-white/20"
                             >
-                                <span className="text-xs sm:text-sm font-semibold text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text">
+                                <span className="text-xs sm:text-sm font-semibold text-transparent bg-gradient-to-r from-violet-400 to-pink-500 bg-clip-text">
                                     Disponible
                                 </span>
                             </motion.div>
@@ -812,9 +873,9 @@ const Portfolio = () => {
                         duration: 2,
                         ease: "easeInOut"
                     }}
-                    className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 hidden sm:block"
+                    className="absolute bottom-6 sm:bottom-8 left-1/2 transform -translate-x-1/2 hidden sm:block z-10"
                 >
-                    <ChevronDown className="w-6 h-6 sm:w-8 sm:h-8 text-gray-400 dark:text-gray-500" />
+                    <ChevronDown className="w-6 h-6 sm:w-8 sm:h-8 text-gray-400" />
                 </motion.div>
             </section>
 
