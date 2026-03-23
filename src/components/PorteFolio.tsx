@@ -46,6 +46,8 @@ type ProjectType = {
     featured?: boolean; // Optionnel avec ?
 };
 
+
+
 // Définir le type pour selectedProject
 type SelectedProjectType = ProjectType | null;
 
@@ -509,8 +511,8 @@ const Portfolio = () => {
                 animate={{ y: 0 }}
                 transition={{ duration: 0.5 }}
                 className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
-                        ? 'bg-white/95 backdrop-blur-md shadow-lg'
-                        : 'bg-gradient-to-r from-slate-900/95 via-purple-900/95 to-slate-900/95 backdrop-blur-sm border-b border-white/10'
+                    ? 'bg-white/95 backdrop-blur-md shadow-lg'
+                    : 'bg-gradient-to-r from-slate-900/95 via-purple-900/95 to-slate-900/95 backdrop-blur-sm border-b border-white/10'
                     }`}
             >
                 <div className="px-6 py-4 md:px-12 lg:px-24 flex items-center justify-between">
@@ -520,12 +522,12 @@ const Portfolio = () => {
                         onClick={() => handleNavClick('accueil')}
                     >
                         <Code2 className={`w-8 h-8 ${isScrolled
-                                ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text'
-                                : 'text-transparent bg-gradient-to-r from-violet-400 to-pink-500 bg-clip-text'
+                            ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text'
+                            : 'text-transparent bg-gradient-to-r from-violet-400 to-pink-500 bg-clip-text'
                             }`} />
                         <span className={`text-2xl font-bold ${isScrolled
-                                ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text'
-                                : 'text-white'
+                            ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text'
+                            : 'text-white'
                             }`}>
                             HariFitia
                         </span>
@@ -540,10 +542,10 @@ const Portfolio = () => {
                                 whileTap={{ scale: 0.95 }}
                                 onClick={() => handleNavClick(item.id)}
                                 className={`flex items-center gap-2 text-lg font-medium transition-colors ${activeSection === item.id
-                                        ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text'
-                                        : isScrolled
-                                            ? 'text-gray-600 hover:text-violet-500'
-                                            : 'text-gray-300 hover:text-white'
+                                    ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text'
+                                    : isScrolled
+                                        ? 'text-gray-600 hover:text-violet-500'
+                                        : 'text-gray-300 hover:text-white'
                                     }`}
                             >
                                 <item.icon className="w-5 h-5" />
@@ -573,8 +575,8 @@ const Portfolio = () => {
                             exit={{ opacity: 0, height: 0 }}
                             transition={{ duration: 0.2 }}
                             className={`md:hidden border-t overflow-hidden ${isScrolled
-                                    ? 'bg-white'
-                                    : 'bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 backdrop-blur-sm border-t border-white/10'
+                                ? 'bg-white'
+                                : 'bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 backdrop-blur-sm border-t border-white/10'
                                 }`}
                         >
                             <div className="px-6 py-4 flex flex-col gap-4">
@@ -587,10 +589,10 @@ const Portfolio = () => {
                                             setIsMenuOpen(false);
                                         }}
                                         className={`flex items-center gap-3 py-3 px-2 font-medium w-full text-left rounded-lg transition-colors ${activeSection === item.id
-                                                ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text bg-white/5'
-                                                : isScrolled
-                                                    ? 'text-gray-600 hover:text-violet-500 hover:bg-gray-50'
-                                                    : 'text-gray-300 hover:text-white hover:bg-white/5'
+                                            ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text bg-white/5'
+                                            : isScrolled
+                                                ? 'text-gray-600 hover:text-violet-500 hover:bg-gray-50'
+                                                : 'text-gray-300 hover:text-white hover:bg-white/5'
                                             }`}
                                     >
                                         <item.icon className="w-5 h-5" />
@@ -1147,14 +1149,6 @@ const Portfolio = () => {
                                                 <span className="text-violet-600 font-medium">
                                                     {'mastery' in skill ? String(skill.mastery) : '85%'}
                                                 </span>
-                                            </div>
-                                            <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
-                                                <motion.div
-                                                    initial={{ width: 0 }}
-                                                    whileInView={{ width: typeof skill.mastery === 'string' || typeof skill.mastery === 'number' ? skill.mastery : '85%' }}
-                                                    transition={{ duration: 1, delay: 0.2 }}
-                                                    className="h-full bg-gradient-to-r from-violet-500 to-pink-600 rounded-full"
-                                                />
                                             </div>
                                         </div>
                                     </div>
