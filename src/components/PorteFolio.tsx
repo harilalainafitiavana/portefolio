@@ -49,6 +49,7 @@ type ProjectType = {
 // Définir le type pour selectedProject
 type SelectedProjectType = ProjectType | null;
 
+
 const Portfolio = () => {
     // État pour la navigation et les interactions
     const [activeSection, setActiveSection] = useState('accueil');
@@ -504,98 +505,109 @@ const Portfolio = () => {
         <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
             {/* Header */}
             <motion.header
-                initial={{ y: -100 }}
-                animate={{ y: 0 }}
-                transition={{ duration: 0.5 }}
-                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
-                    ? 'bg-white/95 backdrop-blur-md shadow-lg'
-                    : 'bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 shadow-md'
+    initial={{ y: -100 }}
+    animate={{ y: 0 }}
+    transition={{ duration: 0.5 }}
+    className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        isScrolled
+            ? 'bg-white/95 backdrop-blur-md shadow-lg'
+            : 'bg-gradient-to-r from-slate-900/95 via-purple-900/95 to-slate-900/95 backdrop-blur-sm border-b border-white/10'
+    }`}
+>
+    <div className="px-6 py-4 md:px-12 lg:px-24 flex items-center justify-between">
+        <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="flex items-center gap-2 cursor-pointer"
+            onClick={() => handleNavClick('accueil')}
+        >
+            <Code2 className={`w-8 h-8 ${
+                isScrolled
+                    ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text'
+                    : 'text-transparent bg-gradient-to-r from-violet-400 to-pink-500 bg-clip-text'
+            }`} />
+            <span className={`text-2xl font-bold ${
+                isScrolled
+                    ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text'
+                    : 'text-white'
+            }`}>
+                HariFitia
+            </span>
+        </motion.div>
+
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex items-center gap-8">
+            {navItems.map((item) => (
+                <motion.button
+                    key={item.id}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => handleNavClick(item.id)}
+                    className={`flex items-center gap-2 text-lg font-medium transition-colors ${
+                        activeSection === item.id
+                            ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text'
+                            : isScrolled
+                                ? 'text-gray-600 hover:text-violet-500'
+                                : 'text-gray-300 hover:text-white'
                     }`}
+                >
+                    <item.icon className="w-5 h-5" />
+                    {item.label}
+                </motion.button>
+            ))}
+        </nav>
+
+        {/* Mobile Menu Button */}
+        <button
+            className="md:hidden p-2"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+            {isMenuOpen ?
+                <X size={24} className={isScrolled ? 'text-gray-800' : 'text-white'} /> :
+                <Menu size={24} className={isScrolled ? 'text-gray-800' : 'text-white'} />
+            }
+        </button>
+    </div>
+
+    {/* Mobile Navigation */}
+    <AnimatePresence>
+        {isMenuOpen && (
+            <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.2 }}
+                className={`md:hidden border-t overflow-hidden ${
+                    isScrolled 
+                        ? 'bg-white' 
+                        : 'bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 backdrop-blur-sm border-t border-white/10'
+                }`}
             >
-                <div className="px-6 py-4 md:px-12 lg:px-24 flex items-center justify-between">
-                    <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        className="flex items-center gap-2 cursor-pointer"
-                        onClick={() => handleNavClick('accueil')}
-                    >
-                        <Code2 className={`w-8 h-8 ${isScrolled
-                            ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text'
-                            : 'text-white'
-                            }`} />
-                        <span className={`text-2xl font-bold ${isScrolled
-                            ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text'
-                            : 'text-white'
-                            }`}>
-                            HariFitia
-                        </span>
-                    </motion.div>
-
-                    {/* Desktop Navigation */}
-                    <nav className="hidden md:flex items-center gap-8">
-                        {navItems.map((item) => (
-                            <motion.button
-                                key={item.id}
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.95 }}
-                                onClick={() => handleNavClick(item.id)}
-                                className={`flex items-center gap-2 text-lg font-medium transition-colors ${activeSection === item.id
-                                    ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text'
-                                    : isScrolled
-                                        ? 'text-gray-600 hover:text-violet-500'
-                                        : 'text-gray-300 hover:text-white'
-                                    }`}
-                            >
-                                <item.icon className="w-5 h-5" />
-                                {item.label}
-                            </motion.button>
-                        ))}
-                    </nav>
-
-                    {/* Mobile Menu Button */}
-                    <button
-                        className="md:hidden p-2"
-                        onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    >
-                        {isMenuOpen ?
-                            <X size={24} className={isScrolled ? 'text-gray-800' : 'text-white'} /> :
-                            <Menu size={24} className={isScrolled ? 'text-gray-800' : 'text-white'} />
-                        }
-                    </button>
-                </div>
-
-                {/* Mobile Navigation */}
-                <AnimatePresence>
-                    {isMenuOpen && (
-                        <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.2 }}
-                            className={`md:hidden border-t overflow-hidden ${isScrolled ? 'bg-white' : 'bg-gradient-to-r from-gray-900 to-gray-800'}`}
+                <div className="px-6 py-4 flex flex-col gap-4">
+                    {navItems.map((item) => (
+                        <motion.button
+                            key={item.id}
+                            whileTap={{ scale: 0.98 }}
+                            onClick={() => {
+                                handleNavClick(item.id);
+                                setIsMenuOpen(false);
+                            }}
+                            className={`flex items-center gap-3 py-3 px-2 font-medium w-full text-left rounded-lg transition-colors ${
+                                activeSection === item.id
+                                    ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text bg-white/5'
+                                    : isScrolled 
+                                        ? 'text-gray-600 hover:text-violet-500 hover:bg-gray-50' 
+                                        : 'text-gray-300 hover:text-white hover:bg-white/5'
+                            }`}
                         >
-                            <div className="px-6 py-4 flex flex-col gap-4">
-                                {navItems.map((item) => (
-                                    <motion.button
-                                        key={item.id}
-                                        whileTap={{ scale: 0.98 }}
-                                        onClick={() => {
-                                            handleNavClick(item.id);
-                                            setIsMenuOpen(false);
-                                        }}
-                                        className={`flex items-center gap-3 py-3 px-2 font-medium w-full text-left rounded-lg ${activeSection === item.id
-                                            ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text'
-                                            : isScrolled ? 'text-gray-600' : 'text-gray-300'
-                                            }`}
-                                    >
-                                        <item.icon className="w-5 h-5" />
-                                        {item.label}
-                                    </motion.button>
-                                ))}
-                            </div>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-            </motion.header>
+                            <item.icon className="w-5 h-5" />
+                            {item.label}
+                        </motion.button>
+                    ))}
+                </div>
+            </motion.div>
+        )}
+    </AnimatePresence>
+</motion.header>
 
             {/* Hero Section - avec background sombre professionnel */}
             <section
@@ -603,67 +615,62 @@ const Portfolio = () => {
                 ref={(el) => { sectionsRef.current['accueil'] = el as HTMLDivElement | null; }}
                 className="min-h-screen px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24 py-12 sm:py-16 md:py-20 flex flex-col justify-center pt-16 sm:pt-20 relative overflow-hidden"
             >
-                {/* Background professionnel sombre avec dégradé et effets */}
+                {/* NOUVEAU BACKGROUND - Effet de morphing avec formes flottantes */}
                 <div className="absolute inset-0 z-0">
-                    {/* Gradient principal sombre */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"></div>
+                    {/* Dégradé de base */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"></div>
 
-                    {/* Effet de grille subtile */}
-                    <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
-
-                    {/* Effet de lumière dynamique */}
+                    {/* Formes flottantes - Grande forme violette */}
                     <motion.div
                         animate={{
+                            scale: [1, 1.2, 1],
+                            x: ['-5%', '5%', '-5%'],
+                            y: ['-5%', '5%', '-5%'],
+                        }}
+                        transition={{
+                            duration: 15,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                        }}
+                        className="absolute top-20 left-10 w-72 h-72 bg-violet-500/20 rounded-full blur-3xl"
+                    />
+
+                    {/* Formes flottantes - Grande forme rose */}
+                    <motion.div
+                        animate={{
+                            scale: [1.2, 1, 1.2],
+                            x: ['5%', '-5%', '5%'],
+                            y: ['5%', '-5%', '5%'],
+                        }}
+                        transition={{
+                            duration: 18,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                        }}
+                        className="absolute bottom-20 right-10 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl"
+                    />
+
+                    {/* Formes flottantes - Forme centrale cyan */}
+                    <motion.div
+                        animate={{
+                            scale: [1, 1.3, 1],
                             x: ['-10%', '10%', '-10%'],
-                            y: ['-10%', '10%', '-10%'],
                         }}
                         transition={{
                             duration: 20,
                             repeat: Infinity,
                             ease: "easeInOut"
                         }}
-                        className="absolute top-0 left-0 w-[500px] h-[500px] bg-violet-600/10 rounded-full blur-[100px]"
-                    />
-                    <motion.div
-                        animate={{
-                            x: ['10%', '-10%', '10%'],
-                            y: ['10%', '-10%', '10%'],
-                        }}
-                        transition={{
-                            duration: 25,
-                            repeat: Infinity,
-                            ease: "easeInOut"
-                        }}
-                        className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-pink-600/10 rounded-full blur-[120px]"
+                        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-3xl"
                     />
 
-                    {/* Effet de particules (points lumineux) */}
-                    <div className="absolute inset-0">
-                        {[...Array(30)].map((_, i) => (
-                            <motion.div
-                                key={i}
-                                initial={{
-                                    x: Math.random() * window.innerWidth,
-                                    y: Math.random() * window.innerHeight,
-                                    opacity: Math.random() * 0.5 + 0.2
-                                }}
-                                animate={{
-                                    y: [null, -50, null],
-                                    opacity: [null, 0, null]
-                                }}
-                                transition={{
-                                    duration: Math.random() * 5 + 3,
-                                    repeat: Infinity,
-                                    delay: Math.random() * 5
-                                }}
-                                className="absolute w-1 h-1 bg-white/40 rounded-full"
-                                style={{
-                                    left: `${Math.random() * 100}%`,
-                                    top: `${Math.random() * 100}%`,
-                                }}
-                            />
-                        ))}
-                    </div>
+                    {/* Grille de points élégante */}
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.1)_1px,_transparent_1px)] bg-[size:40px_40px]" />
+
+                    {/* Effet de grain subtil */}
+                    {/* <div className="absolute inset-0 opacity-20 mix-blend-overlay">
+            <div className="w-full h-full bg-[url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noise)" opacity="0.4"/%3E%3C/svg%3E')] bg-repeat" />
+        </div> */}
                 </div>
 
                 <div className="max-w-7xl mx-auto w-full relative z-10">
@@ -681,7 +688,7 @@ const Portfolio = () => {
                                 transition={{ delay: 0.2, duration: 0.5 }}
                                 className="mb-6 sm:mb-8"
                             >
-                                <span className="inline-block px-4 py-2 bg-gradient-to-r from-violet-500/20 to-pink-600/20 rounded-full text-violet-300 font-medium text-sm sm:text-base mb-3 sm:mb-4 backdrop-blur-sm">
+                                <span className="inline-block px-4 py-2 bg-gradient-to-r from-violet-500/20 to-pink-600/20 rounded-full text-violet-300 font-medium text-sm sm:text-base mb-3 sm:mb-4 backdrop-blur-sm border border-white/20">
                                     Développeur Full Stack
                                 </span>
                                 <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-3 sm:mb-4 leading-tight">
@@ -748,7 +755,7 @@ const Portfolio = () => {
                             </motion.div>
                         </div>
 
-                        {/* Image avec animations améliorées */}
+                        {/* Image avec animations originales */}
                         <motion.div
                             initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
                             animate={{
@@ -767,7 +774,7 @@ const Portfolio = () => {
                             }}
                             className="relative w-full lg:w-1/2 order-1 lg:order-2 mb-8 lg:mb-0"
                         >
-                            {/* Effet de lumière pulsante */}
+                            {/* Effet de lumière pulsante original */}
                             <motion.div
                                 animate={{
                                     scale: [1, 1.2, 1],
@@ -802,7 +809,7 @@ const Portfolio = () => {
                                         repeat: Infinity,
                                         ease: "linear"
                                     }}
-                                    className="absolute inset-4 border-3 border-transparent border-b-violet-400/30 border-l-pink-500/30 rounded-full"
+                                    className="absolute inset-4 border-4 border-transparent border-b-violet-400/30 border-l-pink-500/30 rounded-full"
                                 />
 
                                 {/* Conteneur principal de l'image */}
@@ -810,7 +817,7 @@ const Portfolio = () => {
                                     <motion.div
                                         whileHover={{ scale: 1.1 }}
                                         transition={{ duration: 0.3 }}
-                                        className="relative w-48 h-48 sm:w-56 sm:h-56  lg:w-72 lg:h-72"
+                                        className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-72 lg:h-72"
                                     >
                                         {/* Gradient animé derrière l'image */}
                                         <motion.div
@@ -828,14 +835,10 @@ const Portfolio = () => {
                                             <div className="w-full h-full bg-gray-900 rounded-full p-1">
                                                 {/* Image avec effet de brillance */}
                                                 <div className="relative w-full h-full rounded-full overflow-hidden border-4 border-white/20 shadow-2xl">
-                                                    <motion.img
-                                                        src='https://github.com/harilalainafitiavana/images-portefolio/blob/main/Fitiavana.png?raw=true'
+                                                    <img
+                                                        src="https://github.com/harilalainafitiavana/images-portefolio/blob/main/Fitiavana.png?raw=true"
                                                         alt="Harilalaina Fitiavana - Développeur Full Stack"
                                                         className="w-full h-full object-cover"
-                                                        initial={{ scale: 1.1 }}
-                                                        animate={{ scale: 1 }}
-                                                        transition={{ duration: 0.8 }}
-                                                        whileHover={{ scale: 1.05 }}
                                                     />
                                                 </div>
                                             </div>
@@ -1056,7 +1059,7 @@ const Portfolio = () => {
             <section
                 id="competences"
                 ref={(el) => { sectionsRef.current['competences'] = el as HTMLDivElement | null; }}
-                className="px-6 py-16 md:px-12 lg:px-24"
+                className="px-6 py-16 md:px-12 lg:px-24 bg-gradient-to-b from-gray-50 to-gray-100"
             >
                 <div className="max-w-6xl mx-auto">
                     <motion.div
@@ -1075,63 +1078,89 @@ const Portfolio = () => {
                     </motion.div>
 
                     {/* Filtres par catégorie */}
-                    <div className="flex flex-wrap justify-center gap-3 mb-8">
+                    <div className="flex flex-wrap justify-center gap-3 mb-12">
                         {skillCategories.map((category) => (
                             <motion.button
                                 key={category.id}
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                                 onClick={() => setActiveSkillCategory(category.id)}
-                                className={`flex items-center gap-2 px-4 py-3 rounded-lg transition-all duration-300 ${activeSkillCategory === category.id
+                                className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${activeSkillCategory === category.id
                                     ? 'bg-gradient-to-r from-violet-500 to-pink-600 text-white shadow-lg'
                                     : 'bg-white text-gray-600 hover:bg-gray-100 shadow-sm'
                                     }`}
                             >
-                                <category.icon className="w-4 h-4" />
-                                <span className="font-medium">{category.label}</span>
+                                <div className="flex items-center gap-2">
+                                    <category.icon className="w-4 h-4" />
+                                    <span>{category.label}</span>
+                                </div>
                             </motion.button>
                         ))}
                     </div>
 
-                    {/* Grille des compétences */}
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                    {/* Grille des compétences - Nouveau design */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {filteredSkills.map((skill, index) => (
                             <motion.div
                                 key={skill.name}
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.3, delay: index * 0.05 }}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: index * 0.05 }}
                                 viewport={{ once: true }}
-                                whileHover={{ scale: 1.1, y: -5 }}
+                                whileHover={{ y: -5 }}
                                 className="group"
                             >
-                                <div className={`h-full bg-gradient-to-br ${skill.color} rounded-xl p-4 flex flex-col items-center justify-center text-white shadow-lg transition-all duration-300 group-hover:shadow-2xl`}>
-                                    <div className="flex flex-col items-center justify-center h-full">
-                                        <div className="relative mb-3">
-                                            {/* Conteneur avec fond blanc semi-transparent */}
-                                            <div className="w-16 h-16 bg-white/70 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-md">
+                                <div className="h-full bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 overflow-hidden">
+                                    {/* Barre de progression animée */}
+                                    <div className="h-1 bg-gradient-to-r from-violet-500 to-pink-600 w-0 group-hover:w-full transition-all duration-500" />
+
+                                    <div className="p-6">
+                                        <div className="flex items-start justify-between mb-4">
+                                            {/* Logo */}
+                                            <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-violet-100 to-pink-100 flex items-center justify-center shadow-md group-hover:shadow-xl transition-all duration-300">
                                                 <img
                                                     src={skill.logo}
                                                     alt={skill.name}
-                                                    className="w-10 h-10 object-contain"
+                                                    className="w-8 h-8 object-contain transition-transform duration-300 group-hover:scale-110"
                                                     loading="lazy"
                                                 />
                                             </div>
-                                            {/* Badge de catégorie */}
-                                            <div className="absolute -top-2 -right-2 w-6 h-6 bg-white rounded-full flex items-center justify-center text-xs font-bold text-gray-800 shadow-sm">
-                                                {skill.category === 'frontend' ? 'FE' :
-                                                    skill.category === 'backend' ? 'BE' :
-                                                        skill.category === 'database' ? 'DB' :
-                                                            skill.category === 'cms' ? 'CMS' : 'TOOL'}
+
+                                            {/* Badge de niveau */}
+                                            <div className="px-3 py-1 bg-gray-100 rounded-full">
+                                                <span className="text-xs font-semibold text-gray-600">
+                                                    {'Avancé'}
+                                                </span>
                                             </div>
                                         </div>
-                                        <div className="text-center">
-                                            <div className="text-sm font-bold mb-1">{skill.name}</div>
-                                            <div className="text-xs opacity-80">
-                                                {skill.category === 'frontend' ? 'Frontend' :
-                                                    skill.category === 'backend' ? 'Backend' :
+
+                                        <div className="mb-3">
+                                            <h3 className="text-lg font-bold text-gray-800 mb-1">
+                                                {skill.name}
+                                            </h3>
+                                            <p className="text-xs text-gray-500">
+                                                {skill.category === 'frontend' ? 'Frontend Development' :
+                                                    skill.category === 'backend' ? 'Backend Development' :
                                                         skill.category === 'database' ? 'Base de données' :
-                                                            skill.category === 'cms' ? 'CMS' : 'Outil'}
+                                                            skill.category === 'cms' ? 'Content Management' : 'Outils & Utilitaires'}
+                                            </p>
+                                        </div>
+
+                                        {/* Barre de progression de maîtrise */}
+                                        <div className="mt-4 pt-3 border-t border-gray-100">
+                                            <div className="flex items-center justify-between text-xs mb-2">
+                                                <span className="text-gray-500">Niveau de maîtrise</span>
+                                                <span className="text-violet-600 font-medium">
+                                                    {'mastery' in skill ? String(skill.mastery) : '85%'}
+                                                </span>
+                                            </div>
+                                            <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
+                                                <motion.div
+                                                    initial={{ width: 0 }}
+                                                    whileInView={{ width: typeof skill.mastery === 'string' || typeof skill.mastery === 'number' ? skill.mastery : '85%' }}
+                                                    transition={{ duration: 1, delay: 0.2 }}
+                                                    className="h-full bg-gradient-to-r from-violet-500 to-pink-600 rounded-full"
+                                                />
                                             </div>
                                         </div>
                                     </div>
@@ -1146,28 +1175,57 @@ const Portfolio = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.3 }}
                         viewport={{ once: true }}
-                        className="mt-12 bg-gradient-to-r from-gray-900 to-black rounded-2xl p-8 text-white"
+                        className="mt-16 rounded-2xl overflow-hidden"
                     >
-                        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-                            <div>
-                                <h3 className="text-2xl font-bold mb-2">GitHub</h3>
-                                <p className="text-gray-300">Découvrez mes projets et contributions</p>
-                                <div className="flex items-center gap-2 mt-2">
-                                    <Github className="w-5 h-5" />
-                                    <span className="font-mono">harilalainafitiavana</span>
+                        <div className="relative bg-gradient-to-r from-gray-800 to-gray-900 p-8 md:p-10">
+                            {/* Effet de grille de fond */}
+                            <div className="absolute inset-0 opacity-10" style={{
+                                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='60' height='60' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 60 0 L 0 0 0 60' fill='none' stroke='white' stroke-width='1'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grid)' /%3E%3C/svg%3E")`,
+                                backgroundRepeat: 'repeat'
+                            }} />
+
+                            <div className="relative flex flex-col md:flex-row items-center justify-between gap-6">
+                                <div className="flex items-center gap-6">
+                                    {/* Avatar décoratif */}
+                                    <div className="hidden md:block">
+                                        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-violet-500 to-pink-600 flex items-center justify-center">
+                                            <Github className="w-8 h-8 text-white" />
+                                        </div>
+                                    </div>
+
+                                    <div className="text-center md:text-left">
+                                        <h3 className="text-2xl font-bold text-white mb-2">
+                                            Explorez mon code
+                                        </h3>
+                                        <p className="text-gray-300 text-base mb-3">
+                                            Découvrez mes projets open-source, contributions et réalisations techniques
+                                        </p>
+                                        <div className="flex items-center justify-center md:justify-start gap-3 text-gray-400 text-sm">
+                                            <div className="flex items-center gap-1">
+                                                <div className="w-2 h-2 bg-green-500 rounded-full" />
+                                                <span>Actif sur GitHub</span>
+                                            </div>
+                                            <span>•</span>
+                                            <div className="flex items-center gap-1">
+                                                <Github className="w-4 h-4" />
+                                                <span className="font-mono text-sm">harilalainafitiavana</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+
+                                <motion.a
+                                    href="https://github.com/harilalainafitiavana"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="inline-flex items-center gap-2 px-6 py-3 bg-white text-gray-900 rounded-lg hover:shadow-xl transition-all duration-300 font-semibold"
+                                >
+                                    <ExternalLink size={18} />
+                                    Visiter mon GitHub
+                                </motion.a>
                             </div>
-                            <motion.a
-                                href="https://github.com/harilalainafitiavana"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-gray-900 rounded-lg hover:bg-gray-100 transition-colors font-medium"
-                            >
-                                <ExternalLink size={18} />
-                                Visiter mon GitHub
-                            </motion.a>
                         </div>
                     </motion.div>
                 </div>
