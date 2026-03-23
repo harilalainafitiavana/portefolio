@@ -505,109 +505,103 @@ const Portfolio = () => {
         <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
             {/* Header */}
             <motion.header
-    initial={{ y: -100 }}
-    animate={{ y: 0 }}
-    transition={{ duration: 0.5 }}
-    className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
-            ? 'bg-white/95 backdrop-blur-md shadow-lg'
-            : 'bg-gradient-to-r from-slate-900/95 via-purple-900/95 to-slate-900/95 backdrop-blur-sm border-b border-white/10'
-    }`}
->
-    <div className="px-6 py-4 md:px-12 lg:px-24 flex items-center justify-between">
-        <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="flex items-center gap-2 cursor-pointer"
-            onClick={() => handleNavClick('accueil')}
-        >
-            <Code2 className={`w-8 h-8 ${
-                isScrolled
-                    ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text'
-                    : 'text-transparent bg-gradient-to-r from-violet-400 to-pink-500 bg-clip-text'
-            }`} />
-            <span className={`text-2xl font-bold ${
-                isScrolled
-                    ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text'
-                    : 'text-white'
-            }`}>
-                HariFitia
-            </span>
-        </motion.div>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => (
-                <motion.button
-                    key={item.id}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => handleNavClick(item.id)}
-                    className={`flex items-center gap-2 text-lg font-medium transition-colors ${
-                        activeSection === item.id
-                            ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text'
-                            : isScrolled
-                                ? 'text-gray-600 hover:text-violet-500'
-                                : 'text-gray-300 hover:text-white'
+                initial={{ y: -100 }}
+                animate={{ y: 0 }}
+                transition={{ duration: 0.5 }}
+                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
+                        ? 'bg-white/95 backdrop-blur-md shadow-lg'
+                        : 'bg-gradient-to-r from-slate-900/95 via-purple-900/95 to-slate-900/95 backdrop-blur-sm border-b border-white/10'
                     }`}
-                >
-                    <item.icon className="w-5 h-5" />
-                    {item.label}
-                </motion.button>
-            ))}
-        </nav>
-
-        {/* Mobile Menu Button */}
-        <button
-            className="md:hidden p-2"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-            {isMenuOpen ?
-                <X size={24} className={isScrolled ? 'text-gray-800' : 'text-white'} /> :
-                <Menu size={24} className={isScrolled ? 'text-gray-800' : 'text-white'} />
-            }
-        </button>
-    </div>
-
-    {/* Mobile Navigation */}
-    <AnimatePresence>
-        {isMenuOpen && (
-            <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.2 }}
-                className={`md:hidden border-t overflow-hidden ${
-                    isScrolled 
-                        ? 'bg-white' 
-                        : 'bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 backdrop-blur-sm border-t border-white/10'
-                }`}
             >
-                <div className="px-6 py-4 flex flex-col gap-4">
-                    {navItems.map((item) => (
-                        <motion.button
-                            key={item.id}
-                            whileTap={{ scale: 0.98 }}
-                            onClick={() => {
-                                handleNavClick(item.id);
-                                setIsMenuOpen(false);
-                            }}
-                            className={`flex items-center gap-3 py-3 px-2 font-medium w-full text-left rounded-lg transition-colors ${
-                                activeSection === item.id
-                                    ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text bg-white/5'
-                                    : isScrolled 
-                                        ? 'text-gray-600 hover:text-violet-500 hover:bg-gray-50' 
-                                        : 'text-gray-300 hover:text-white hover:bg-white/5'
-                            }`}
-                        >
-                            <item.icon className="w-5 h-5" />
-                            {item.label}
-                        </motion.button>
-                    ))}
+                <div className="px-6 py-4 md:px-12 lg:px-24 flex items-center justify-between">
+                    <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        className="flex items-center gap-2 cursor-pointer"
+                        onClick={() => handleNavClick('accueil')}
+                    >
+                        <Code2 className={`w-8 h-8 ${isScrolled
+                                ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text'
+                                : 'text-transparent bg-gradient-to-r from-violet-400 to-pink-500 bg-clip-text'
+                            }`} />
+                        <span className={`text-2xl font-bold ${isScrolled
+                                ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text'
+                                : 'text-white'
+                            }`}>
+                            HariFitia
+                        </span>
+                    </motion.div>
+
+                    {/* Desktop Navigation */}
+                    <nav className="hidden md:flex items-center gap-8">
+                        {navItems.map((item) => (
+                            <motion.button
+                                key={item.id}
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={() => handleNavClick(item.id)}
+                                className={`flex items-center gap-2 text-lg font-medium transition-colors ${activeSection === item.id
+                                        ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text'
+                                        : isScrolled
+                                            ? 'text-gray-600 hover:text-violet-500'
+                                            : 'text-gray-300 hover:text-white'
+                                    }`}
+                            >
+                                <item.icon className="w-5 h-5" />
+                                {item.label}
+                            </motion.button>
+                        ))}
+                    </nav>
+
+                    {/* Mobile Menu Button */}
+                    <button
+                        className="md:hidden p-2"
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                    >
+                        {isMenuOpen ?
+                            <X size={24} className={isScrolled ? 'text-gray-800' : 'text-white'} /> :
+                            <Menu size={24} className={isScrolled ? 'text-gray-800' : 'text-white'} />
+                        }
+                    </button>
                 </div>
-            </motion.div>
-        )}
-    </AnimatePresence>
-</motion.header>
+
+                {/* Mobile Navigation */}
+                <AnimatePresence>
+                    {isMenuOpen && (
+                        <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className={`md:hidden border-t overflow-hidden ${isScrolled
+                                    ? 'bg-white'
+                                    : 'bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 backdrop-blur-sm border-t border-white/10'
+                                }`}
+                        >
+                            <div className="px-6 py-4 flex flex-col gap-4">
+                                {navItems.map((item) => (
+                                    <motion.button
+                                        key={item.id}
+                                        whileTap={{ scale: 0.98 }}
+                                        onClick={() => {
+                                            handleNavClick(item.id);
+                                            setIsMenuOpen(false);
+                                        }}
+                                        className={`flex items-center gap-3 py-3 px-2 font-medium w-full text-left rounded-lg transition-colors ${activeSection === item.id
+                                                ? 'text-transparent bg-gradient-to-r from-violet-500 to-pink-600 bg-clip-text bg-white/5'
+                                                : isScrolled
+                                                    ? 'text-gray-600 hover:text-violet-500 hover:bg-gray-50'
+                                                    : 'text-gray-300 hover:text-white hover:bg-white/5'
+                                            }`}
+                                    >
+                                        <item.icon className="w-5 h-5" />
+                                        {item.label}
+                                    </motion.button>
+                                ))}
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </motion.header>
 
             {/* Hero Section - avec background sombre professionnel */}
             <section
