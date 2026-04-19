@@ -116,7 +116,7 @@ const Portfolio = () => {
                 'https://github.com/harilalainafitiavana/images-portefolio/blob/main/print6.png?raw=true',
                 'https://github.com/harilalainafitiavana/images-portefolio/blob/main/print7.png?raw=true'
             ],
-            link: 'https://www.printy.mg',
+            link: 'https://tubular-sprinkles-7cdfe0.netlify.app',
             github: 'https://github.com/harilalainafitiavana/print.mg/tree/master',
             featured: false
         },
