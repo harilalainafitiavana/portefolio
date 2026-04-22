@@ -97,7 +97,7 @@ const Portfolio = () => {
                 'https://github.com/harilalainafitiavana/images-portefolio/blob/main/Sahameva3.png?raw=true',
                 'https://github.com/harilalainafitiavana/images-portefolio/blob/main/Sahameva4.png?raw=true'
             ],
-            link: '#',
+            link: 'sahameva.com',
             github: '#',
             featured: false
         },
