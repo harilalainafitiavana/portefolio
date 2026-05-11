@@ -59,6 +59,7 @@ const Portfolio = () => {
     const [showContacts, setShowContacts] = useState(false);
     const [activeSkillCategory, setActiveSkillCategory] = useState('all');
     const [showScrollButton, setShowScrollButton] = useState(false);
+    const [tooltipVisible, setTooltipVisible] = useState<string | null>(null);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -271,7 +272,7 @@ const Portfolio = () => {
     // Liens sociaux avec GitHub mis à jour
     const socialLinks = [
         { icon: Github, label: 'GitHub', href: 'https://github.com/harilalainafitiavana', color: 'hover:text-gray-900' },
-        { icon: Linkedin, label: 'LinkedIn', href: 'https://linkedin.com', color: 'hover:text-blue-600' },
+        { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/fitiavana-harilalaina-883904378', color: 'hover:text-blue-600' },
         { icon: Mail, label: 'Email', href: 'mailto:harilalainafitiavana@gmail.com', color: 'hover:text-red-500' },
     ];
 
@@ -1463,17 +1464,43 @@ const Portfolio = () => {
 
                                     {/* Boutons d'action */}
                                     <div className="flex gap-3">
-                                        <motion.a
-                                            href={project.link}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            whileHover={{ scale: 1.05, x: 5 }}
-                                            whileTap={{ scale: 0.95 }}
-                                            className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-violet-500 to-pink-600 text-white rounded-lg hover:opacity-90 transition-all duration-300 group/live"
-                                        >
-                                            <ExternalLink className="w-4 h-4 group-hover/live:rotate-12 transition-transform" />
-                                            <span className="font-medium">Visiter</span>
-                                        </motion.a>
+                                        {project.link === '#' ? (
+                                            // Bouton désactivé avec tooltip
+                                            <div className="flex-1 relative">
+                                                <div
+                                                    onMouseEnter={() => setTooltipVisible(project.title)}
+                                                    onMouseLeave={() => setTooltipVisible(null)}
+                                                    className="w-full"
+                                                >
+                                                    <div className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gray-400 text-white rounded-lg cursor-not-allowed opacity-60">
+                                                        <ExternalLink className="w-4 h-4" />
+                                                        <span className="font-medium">Visiter</span>
+                                                    </div>
+
+                                                    {/* Tooltip */}
+                                                    {tooltipVisible === project.title && (
+                                                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 text-white text-xs rounded-lg shadow-lg z-10 whitespace-nowrap">
+                                                            🔒 Ce projet est privé<br />
+                                                            📸 Veuillez cliquer sur "Galerie"
+                                                            <div className="absolute top-full left-1/2 transform -translate-x-1/2 -mt-1 border-4 border-transparent border-t-gray-900"></div>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            // Bouton actif normal
+                                            <motion.a
+                                                href={project.link}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                whileHover={{ scale: 1.05, x: 5 }}
+                                                whileTap={{ scale: 0.95 }}
+                                                className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-violet-500 to-pink-600 text-white rounded-lg hover:opacity-90 transition-all duration-300 group/live"
+                                            >
+                                                <ExternalLink className="w-4 h-4 group-hover/live:rotate-12 transition-transform" />
+                                                <span className="font-medium">Visiter</span>
+                                            </motion.a>
+                                        )}
 
                                         <motion.button
                                             onClick={() => {
