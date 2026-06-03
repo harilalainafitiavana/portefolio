@@ -98,7 +98,7 @@ const Portfolio = () => {
                 'https://github.com/harilalainafitiavana/images-portefolio/blob/main/Sahameva3.png?raw=true',
                 'https://github.com/harilalainafitiavana/images-portefolio/blob/main/Sahameva4.png?raw=true'
             ],
-            link: 'https://sahameva.com',
+            link: '#',
             github: '#',
             featured: false
         },
@@ -122,18 +122,21 @@ const Portfolio = () => {
             featured: false
         },
         {
-            title: 'Vente des ordinateurs',
-            description: 'Site de vente en ligne d\'ordinateurs et accessoires informatiques',
-            technologies: ['HTML', 'CSS', 'JavaScript'],
-            category: 'frontend',
-            image: 'https://github.com/harilalainafitiavana/images-portefolio/blob/main/Venteordinateur.png?raw=true',
+            title: 'ApexCX',
+            description: 'Site web vitrine d\’ApexCX, entreprise spécialisée dans les services de call center, BPO et expérience client.',
+            technologies: ['Wordpress', 'Elementor', 'Hostinger'],
+            category: 'cms',
+            image: 'https://github.com/harilalainafitiavana/images-portefolio/blob/main/APEXCX.png?raw=true',
             gallery: [
-                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/vente1.png?raw=true',
-                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/vente2.png?raw=true',
-                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/vente3.png?raw=true'
+                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/APEXCX1.png?raw=true',
+                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/APEXCX2.png?raw=true',
+                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/APEXCX3.png?raw=true',
+                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/APEXCX4.png?raw=true',
+                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/APEXCX5.png?raw=true',
+                'https://github.com/harilalainafitiavana/images-portefolio/blob/main/APEXCX6.png?raw=true'
             ],
-            link: 'https://venteordinateur.netlify.app',
-            github: 'https://github.com/harilalainafitiavana/Site_de_vente_ordinateur',
+            link: 'apexcx.eu',
+            github: '#',
             featured: false
         },
         {
