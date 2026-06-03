@@ -135,7 +135,7 @@ const Portfolio = () => {
                 'https://github.com/harilalainafitiavana/images-portefolio/blob/main/APEXCX5.png?raw=true',
                 'https://github.com/harilalainafitiavana/images-portefolio/blob/main/APEXCX6.png?raw=true'
             ],
-            link: 'apexcx.eu',
+            link: 'https://apexcx.eu',
             github: '#',
             featured: false
         },
